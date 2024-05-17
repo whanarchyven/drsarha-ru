@@ -24,9 +24,9 @@ import Navbar from '@/src/widgets/navbar';
 // ? clsx(Roboto.variable) для body
 
 export const metadata: Metadata = {
-  title: 'Next.js Project',
+  title: 'News',
   description:
-    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis, et',
+    'latest news from the world of dermatology',
 };
 
 interface RootLayoutProps {
