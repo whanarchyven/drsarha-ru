@@ -23,7 +23,7 @@ const Navbar: FC = () => {
     },
   ];
 
-  const name = 'Max Gogolev';
+  const name = 'Профиль';
 
   const cvaRoot = cva([
     'w-full fixed z-[9999] left-0 md:px-8 px-2 mb-3 py-2 bg-black rounded-b-3xl bg-opacity-[0.15] backdrop-blur-xl',
