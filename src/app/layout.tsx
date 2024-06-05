@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 import ReduxProvider from '@/src/shared/store/ReduxProvider';
 import { RemResizeScript } from '@/src/features/rem-resize';
 import Navbar from '@/src/widgets/navbar';
+import Footer from '@/src/widgets/footer';
 
 // import 'swiper/css';
 // import 'swiper/css/navigation';
@@ -25,8 +26,7 @@ import Navbar from '@/src/widgets/navbar';
 
 export const metadata: Metadata = {
   title: 'News',
-  description:
-    'latest news from the world of dermatology',
+  description: 'latest news from the world of dermatology',
 };
 
 interface RootLayoutProps {
@@ -48,9 +48,10 @@ export default function RootLayout({ children, ...rest }: RootLayoutProps) {
       <body className={'bg-custom-radial bg-cover  font-inter'}>
         <ReduxProvider {...rest}>
           <div id="app">
-            <div className={'md:px-10 px-1'}>
+            <div className={''}>
               <Navbar />
-              <div className={'pt-10'}>{children}</div>
+              <div className={'pt-10 md:px-10 px-1'}>{children}</div>
+              <Footer />
             </div>
           </div>
         </ReduxProvider>
