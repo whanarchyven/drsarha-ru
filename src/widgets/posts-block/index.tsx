@@ -14,6 +14,7 @@ interface postsBlockInterface {
     source: string;
     file: string;
   }[];
+  locale?:string
   displayTitle?: boolean;
   displaySaveBtn?: boolean;
 }
@@ -21,7 +22,7 @@ interface postsBlockInterface {
 const PostsBlock: FC<postsBlockInterface> = ({
   posts,
   displayTitle,
-  displaySaveBtn,
+  displaySaveBtn, locale
 }) => {
   const [searchString, setSearchString] = useState('');
   const [category, setCategory] = useState('Категория');
@@ -91,12 +92,12 @@ const PostsBlock: FC<postsBlockInterface> = ({
           className={'w-1/3'}
           mutateFunc={setCategory}
           value={category}
-          options={['Дерматология', 'Педиатрия', 'Дермато-венерология']}
+          options={locale=='en'?['Dermatology', 'Pediatric', 'Venereology']:['Дерматология', 'Педиатрия', 'Дермато-венерология']}
         />
         <SearchInput
           className={'w-2/3 md:w-full'}
           mutateFunc={setSearchString}
-          value={searchString}
+          value={searchString} placeholder={locale=='en'?'Search...':'Поиск...'}
         />
         <GridPicker
           className={'hidden md:flex'}
@@ -109,13 +110,11 @@ const PostsBlock: FC<postsBlockInterface> = ({
         <p
           className={
             'my-4 text-white md:text-left text-center md:pl-4 font-bold'
-          }>
-          Новые статьи
-        </p>
+          }>{locale=='en'?'New articles':'Новые статьи'}</p>
       )}
       <div className={cvaPostGrid({ mode: gridDisplayMode })}>
         {posts.map((post, counter) => (
-          <Post
+          <Post locale={locale}
             key={counter}
             viewFunc={() => {
               viewPost(post);

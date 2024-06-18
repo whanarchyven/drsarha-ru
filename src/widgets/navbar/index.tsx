@@ -8,7 +8,7 @@ import { cva } from 'class-variance-authority';
 import { usePathname } from 'next/navigation';
 
 const Navbar: FC = () => {
-  const links = [
+  const linksRu = [
     {
       link: 'new',
       name: 'Новые статьи',
@@ -22,6 +22,26 @@ const Navbar: FC = () => {
       name: 'Прочитанное',
     },
   ];
+
+  const linksEn = [
+    {
+      link: 'en/new',
+      name: 'New articles',
+    },
+    {
+      link: 'en/saved',
+      name: 'Saved',
+    },
+    {
+      link: 'en/viewed',
+      name: 'Viewed',
+    },
+  ];
+
+  const isEnglish=usePathname().includes('/en')
+
+  const links=isEnglish?linksEn:linksRu
+
 
   const name = 'Профиль';
 
@@ -68,7 +88,7 @@ const Navbar: FC = () => {
           <BurgerIcon className={cvaBurgerIcon()} />
         </div>
         <div className={cvaLogo()}>
-          <Link href={'/'}>
+          <Link href={isEnglish?'/en/new':'/'}>
             <img src={'/images/logo.png'} />
           </Link>
         </div>
@@ -86,7 +106,7 @@ const Navbar: FC = () => {
         </div>
         <div className={cvaAccountContainer()}>
           <AccountIcon className={cvaAccountIcon()} />
-          <p className={cvaLinkLabel({ isActive: false })}>{name}</p>
+          <p className={cvaLinkLabel({ isActive: false })}>{isEnglish?'Profile':name}</p>
         </div>
       </div>
       {menuOpen && (

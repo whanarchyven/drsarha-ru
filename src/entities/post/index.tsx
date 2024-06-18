@@ -20,6 +20,7 @@ interface postInterface extends VariantProps<typeof cvaRoot> {
   saveFunc: () => any;
   viewFunc: () => any;
   displaySaveBtn?: boolean;
+  locale?:string;
 }
 
 const cvaRoot = cva(
@@ -75,7 +76,7 @@ const Post: FC<postInterface> = ({
   saveFunc,
   deleteFunc,
   viewFunc,
-  displaySaveBtn,
+  displaySaveBtn, locale
 }) => {
   return (
     <div className={clsx(cvaRoot({ mode: mode }))}>
@@ -95,7 +96,7 @@ const Post: FC<postInterface> = ({
           }}
           href={file}>
           <ActionButton
-            label={'Читать'}
+            label={locale=='en'?'Read':'Читать'}
             icon={<DocumentIcon className={cvaIcon({ filled: true })} />}
             filled={true}
           />
@@ -104,7 +105,7 @@ const Post: FC<postInterface> = ({
           <>
             {isSaved ? (
               <ActionButton
-                label={'Сохранено'}
+                label={locale=='en'?'Saved':'Сохранено'}
                 icon={<OkIcon className={cvaIcon({ filled: true })} />}
                 filled={true}
                 onClick={() => {
@@ -113,7 +114,7 @@ const Post: FC<postInterface> = ({
               />
             ) : (
               <ActionButton
-                label={'Сохранить'}
+                label={locale=='en'?'Save':'Сохранить'}
                 icon={<SaveIcon className={cvaIcon({ filled: false })} />}
                 filled={false}
                 onClick={() => {
