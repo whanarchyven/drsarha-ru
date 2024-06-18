@@ -38,10 +38,9 @@ const Navbar: FC = () => {
     },
   ];
 
-  const isEnglish=usePathname().includes('/en')
+  const isEnglish = usePathname().includes('/en');
 
-  const links=isEnglish?linksEn:linksRu
-
+  const links = isEnglish ? linksEn : linksRu;
 
   const name = 'Профиль';
 
@@ -88,7 +87,7 @@ const Navbar: FC = () => {
           <BurgerIcon className={cvaBurgerIcon()} />
         </div>
         <div className={cvaLogo()}>
-          <Link href={isEnglish?'/en/new':'/'}>
+          <Link href={isEnglish ? '/en/new' : '/'}>
             <img src={'/images/logo.png'} />
           </Link>
         </div>
@@ -106,7 +105,9 @@ const Navbar: FC = () => {
         </div>
         <div className={cvaAccountContainer()}>
           <AccountIcon className={cvaAccountIcon()} />
-          <p className={cvaLinkLabel({ isActive: false })}>{isEnglish?'Profile':name}</p>
+          <p className={cvaLinkLabel({ isActive: false })}>
+            {isEnglish ? 'Profile' : name}
+          </p>
         </div>
       </div>
       {menuOpen && (

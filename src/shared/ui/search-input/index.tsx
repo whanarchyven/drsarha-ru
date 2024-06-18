@@ -6,13 +6,14 @@ interface searchInputInterface {
   mutateFunc: (arg: any) => any;
   value: string;
   className?: string;
-  placeholder?:string
+  placeholder?: string;
 }
 
 const SearchInput: FC<searchInputInterface> = ({
   mutateFunc,
   className,
-  value, placeholder
+  value,
+  placeholder,
 }) => {
   return (
     <div
@@ -25,7 +26,7 @@ const SearchInput: FC<searchInputInterface> = ({
         onChange={(event) => {
           mutateFunc(event.target.value);
         }}
-        placeholder={placeholder??'Поиск...'}
+        placeholder={placeholder ?? 'Поиск...'}
         className={
           'bg-transparent placeholder:text-white placeholder:text-opacity-50 h-full outline-0  text-white text-sm w-full'
         }
