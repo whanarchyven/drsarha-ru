@@ -45,7 +45,10 @@ export default function RootLayout({ children, ...rest }: RootLayoutProps) {
           endScaleBottomWidth={1024}
         />
       </head>
-      <body className={'bg-custom-radial bg-cover  font-inter'}>
+      <body
+        className={
+          'bg-custom-radial bg-cover bg-center bg-no-repeat  font-inter'
+        }>
         <ReduxProvider {...rest}>
           <div id="app">
             <div className={''}>

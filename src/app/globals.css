@@ -16,10 +16,10 @@ html {
   font-size: 10px;
 }
 
-html,
-body {
-  height: 100%;
-}
+/*html,*/
+/*body {*/
+/*  height: 100%;*/
+/*}*/
 
 select {
   appearance: none;
@@ -34,7 +34,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   @apply text-black;
-  @apply bg-white;
+  /*@apply bg-white;*/
   font-size: 1.8rem;
   font-weight: 400;
   line-height: 1.2;
@@ -129,4 +129,16 @@ strong {
   75% {
     transform: translate(0, 160%);
   }
+}
+
+.green-shadow {
+  box-shadow: 10.31px 24.75px 45.38px 0px rgba(0, 93, 82, 0.25);
+}
+
+.green-bounce-shadow {
+  box-shadow: inset 4px 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.tile-inner-shadow {
+  box-shadow: inset 2px 2px 8px 0 rgba(255, 255, 255, 0.25);
 }

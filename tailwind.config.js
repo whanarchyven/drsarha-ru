@@ -13,7 +13,7 @@ module.exports = {
     extend: {
       backgroundImage: {
         'custom-radial':
-          'radial-gradient(circle, #5ECCB8 0%, #005D52 74%, #012D37 100%)',
+          'radial-gradient(circle, #6CE2DB 0%, #006572 74%, #004959 100%)',
       },
       fontFamily: {
         inter: ['Inter'],
@@ -22,6 +22,7 @@ module.exports = {
         cBlack: '#000',
         cWhite: '#fff',
         cGreen: '#067252',
+        cOrange: '#FF6B57',
       },
       minHeight: {},
       boxShadow: {},
