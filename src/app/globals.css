@@ -135,6 +135,12 @@ strong {
   box-shadow: 10.31px 24.75px 45.38px 0px rgba(0, 93, 82, 0.25);
 }
 
+.callback-shadow {
+  box-shadow:
+    10.31px 24.75px 45.38px 0px rgba(11, 43, 39, 0.45),
+    inset 2px 2px 8px 0 rgba(255, 255, 255, 0.25);
+}
+
 .green-bounce-shadow {
   box-shadow: inset 4px 4px 4px 0 rgba(0, 0, 0, 0.25);
 }

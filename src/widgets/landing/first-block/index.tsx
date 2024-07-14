@@ -60,7 +60,10 @@ const FirstBlock = () => {
 
   return (
     <>
-      <div className={'h-screen -mt-10 flex justify-between items-center'}>
+      <div
+        className={
+          'h-screen -mt-10 flex justify-between relative items-center'
+        }>
         <motion.div className={'w-1/2 text-white flex flex-col gap-3'}>
           <motion.p
             initial={{ x: '-200px', opacity: 0 }}
@@ -86,6 +89,7 @@ const FirstBlock = () => {
             <OrangeButton>Подписаться</OrangeButton>
           </motion.div>
         </motion.div>
+        {/*<motion.img  className={' absolute -right-6.3 -bottom-[11.3rem] z-50'} src={'/images/landing/dots.svg'}/>*/}
         <div className={'relative h-[50rem]'}>
           <div
             className={
