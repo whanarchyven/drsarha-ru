@@ -91,6 +91,7 @@ const Post: FC<postInterface> = ({
       {/*<p className={'md:text-md text-sm opacity-50'}>Источник: {source}</p>*/}
       <div className={'flex gap-3 items-center'}>
         <Link
+          id={'post_read'}
           target={'_blank'}
           onClick={() => {
             viewFunc();
@@ -103,7 +104,7 @@ const Post: FC<postInterface> = ({
           />
         </Link>
         {displaySaveBtn && (
-          <>
+          <div id={'post_save'}>
             {isSaved ? (
               <ActionButton
                 label={locale == 'en' ? 'Saved' : 'Сохранено'}
@@ -123,7 +124,7 @@ const Post: FC<postInterface> = ({
                 }}
               />
             )}
-          </>
+          </div>
         )}
       </div>
     </div>

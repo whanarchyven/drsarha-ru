@@ -148,3 +148,11 @@ strong {
 .tile-inner-shadow {
   box-shadow: inset 2px 2px 8px 0 rgba(255, 255, 255, 0.25);
 }
+
+.introjs-skipbutton {
+  color: white !important;
+}
+/*.introjs-overlay{*/
+/*  backdrop-filter: blur(200px);*/
+/*  filter: blur(200px);*/
+/*}*/

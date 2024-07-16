@@ -55,6 +55,13 @@ export default function RootLayout({ children, ...rest }: RootLayoutProps) {
               <Navbar />
               <div className={'pt-10 md:px-10 px-1'}>{children}</div>
               <Footer />
+              <img
+                id={'dr_sara'}
+                className={
+                  'fixed drop-shadow-2xl bottom-4 right-4 w-[20rem] h-auto cursor-pointer'
+                }
+                src={'/images/dr_sara.svg'}
+              />
             </div>
           </div>
         </ReduxProvider>

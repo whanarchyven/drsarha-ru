@@ -5,6 +5,7 @@ import SearchInput from '@/src/shared/ui/search-input';
 import SelectInput from '@/src/shared/ui/select-input';
 import { cva, VariantProps } from 'class-variance-authority';
 import Post from '@/src/entities/post';
+import clsx from 'clsx';
 
 interface postsBlockInterface {
   posts: {
@@ -86,6 +87,8 @@ const PostsBlock: FC<postsBlockInterface> = ({
     }
   };
 
+  const [type, setType] = useState('Статьи');
+
   return (
     <div className={'mt-2 pb-10'}>
       <div className={'flex justify-between gap-1 md:gap-4'}>
@@ -113,12 +116,30 @@ const PostsBlock: FC<postsBlockInterface> = ({
         />
       </div>
       {displayTitle && (
-        <p
-          className={
-            'my-4 text-white md:text-left text-center md:pl-4 font-bold'
-          }>
-          {locale == 'en' ? 'New articles' : 'Новые статьи'}
-        </p>
+        <div className={'flex my-4 items-center gap-3'}>
+          <p
+            id={'type_articles'}
+            onClick={() => {
+              setType('Статьи');
+            }}
+            className={clsx(
+              'text-white cursor-pointer md:text-left text-center md:pl-4 font-bold',
+              type == 'Статьи' ? 'opacity-100 underline' : 'opacity-50'
+            )}>
+            Статьи
+          </p>
+          <p
+            id={'type_news'}
+            onClick={() => {
+              setType('Новости');
+            }}
+            className={clsx(
+              'text-white cursor-pointer md:text-left text-center md:pl-4 font-bold',
+              type == 'Новости' ? 'opacity-100 underline' : 'opacity-50'
+            )}>
+            Новости
+          </p>
+        </div>
       )}
       <div className={cvaPostGrid({ mode: gridDisplayMode })}>
         {posts.map((post, counter) => (
