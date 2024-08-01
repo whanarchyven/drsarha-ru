@@ -8,6 +8,7 @@ import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import clsx from 'clsx';
+import { useRouter } from 'next/navigation';
 
 const Features = () => {
   const sectionsRef = useRef<any>([]);
@@ -52,6 +53,8 @@ const Features = () => {
     };
   }, []);
 
+  const router = useRouter();
+
   const getSlideId = (activeSection: any) => {
     switch (activeSection) {
       case 'screen1':
@@ -85,25 +88,31 @@ const Features = () => {
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, ease: 'easeOut' }}
                   className={'font-inter font-bold text-[5rem]'}>
-                  С нами вы всегда
+                  Быстрый поиск
                   <br />
-                  на шаг впереди!
+                  информации
                 </motion.p>
                 <motion.p
                   initial={{ y: '-20px', opacity: 0 }}
                   whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, ease: 'easeOut', delay: 0.3 }}>
-                  Читайте свежие статьи и новости в сфере дерматологии на родном
-                  языке и ускоряйте работу над научными трудами с персональным
-                  AI-помощником.
+                  С нашим AI-помощником вы мгновенно получаете мировую
+                  информацию на одном сервисе и на родном языке. Экономьте
+                  время, забыв про переводы и долгие поиски, и сразу получайте
+                  свежие научные статьи и новости медицины.
                 </motion.p>
                 <motion.div
                   initial={{ y: '-20px', opacity: 0 }}
                   whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, ease: 'easeOut', delay: 0.6 }}>
-                  <OrangeButton>Подписаться</OrangeButton>
+                  <OrangeButton
+                    onClick={() => {
+                      router.push('/register');
+                    }}>
+                    Подписаться
+                  </OrangeButton>
                 </motion.div>
               </motion.div>
               <motion.div
@@ -119,25 +128,31 @@ const Features = () => {
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, ease: 'easeOut' }}
                   className={'font-inter font-bold text-[5rem]'}>
-                  С нами вы всегда
+                  Помощь в
                   <br />
-                  на шаг впереди!
+                  написании статей
                 </motion.p>
                 <motion.p
                   initial={{ y: '-20px', opacity: 0 }}
                   whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, ease: 'easeOut', delay: 0.3 }}>
-                  Читайте свежие статьи и новости в сфере дерматологии на родном
-                  языке и ускоряйте работу над научными трудами с персональным
-                  AI-помощником.
+                  AI-помощник готов ответить на любой ваш вопрос и быстро
+                  предоставить необходимую информацию. Вы можете легко найти
+                  нужные данные и исследования для написания научных статей,
+                  сократив время на поиски и анализ.
                 </motion.p>
                 <motion.div
                   initial={{ y: '-20px', opacity: 0 }}
                   whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, ease: 'easeOut', delay: 0.6 }}>
-                  <OrangeButton>Подписаться</OrangeButton>
+                  <OrangeButton
+                    onClick={() => {
+                      router.push('/register');
+                    }}>
+                    Подписаться
+                  </OrangeButton>
                 </motion.div>
               </motion.div>
               <motion.div
@@ -153,25 +168,31 @@ const Features = () => {
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, ease: 'easeOut' }}
                   className={'font-inter font-bold text-[5rem]'}>
-                  С нами вы всегда
-                  <br />
-                  на шаг впереди!
+                  Удобная работа
+                  <br />с текстами
                 </motion.p>
                 <motion.p
                   initial={{ y: '-20px', opacity: 0 }}
                   whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, ease: 'easeOut', delay: 0.3 }}>
-                  Читайте свежие статьи и новости в сфере дерматологии на родном
-                  языке и ускоряйте работу над научными трудами с персональным
-                  AI-помощником.
+                  Наш сервис позволяет быстро структурировать и формировать
+                  собственные научные статьи в один клик. Сосредоточьтесь на
+                  содержании, а наш AI-помощник позаботится о структуре и
+                  оформлении, значительно ускоряя процесс написания и
+                  публикации.
                 </motion.p>
                 <motion.div
                   initial={{ y: '-20px', opacity: 0 }}
                   whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, ease: 'easeOut', delay: 0.6 }}>
-                  <OrangeButton>Подписаться</OrangeButton>
+                  <OrangeButton
+                    onClick={() => {
+                      router.push('/register');
+                    }}>
+                    Подписаться
+                  </OrangeButton>
                 </motion.div>
               </motion.div>
             </div>

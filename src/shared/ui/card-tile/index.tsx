@@ -40,7 +40,7 @@ const cvaAbout = cva(['text-sm underline cursor-pointer opacity-50'], {
   },
 });
 
-const cvaDescription = cva([''], {
+const cvaDescription = cva(['text-sm'], {
   variants: {
     type: {
       white: 'text-[#0E656F]',

@@ -1,6 +1,6 @@
 'use client';
 import './globals.css';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ReduxProvider from '@/src/shared/store/ReduxProvider';
 import { RemResizeScript } from '@/src/features/rem-resize';
 import Navbar from '@/src/widgets/navbar';
@@ -8,6 +8,8 @@ import Footer from '@/src/widgets/footer';
 import clsx from 'clsx';
 import { NextRequest, NextResponse } from 'next/server';
 import { usePathname } from 'next/navigation';
+import Chat from '@/src/widgets/chat';
+import { differenceInCalendarDays } from 'date-fns';
 
 // import 'swiper/css';
 // import 'swiper/css/navigation';
@@ -52,6 +54,23 @@ export default function RootLayout({ children, ...rest }: RootLayoutProps) {
   const pathname = usePathname();
   const displayLayout = !pathname.includes('articles');
 
+  const [isAuthorized, setIsAuthorized] = useState(false);
+
+  useEffect(() => {
+    let isValid = false;
+    if (
+      localStorage.getItem('user') &&
+      localStorage.getItem('lastLogin') &&
+      localStorage.getItem('token')
+    ) {
+      const lastLogin = new Date(localStorage.getItem('lastLogin') ?? '');
+      if (differenceInCalendarDays(new Date(), lastLogin) < 1) {
+        isValid = true;
+      }
+    }
+    setIsAuthorized(isValid);
+  }, []);
+
   return (
     <html lang="ru">
       <head>
@@ -74,6 +93,7 @@ export default function RootLayout({ children, ...rest }: RootLayoutProps) {
               <div className={clsx(displayLayout ? 'md:px-10 px-1 pt-10' : '')}>
                 {children}
               </div>
+              {isAuthorized && <Chat />}
               {displayLayout && <Footer />}
               {/*<img*/}
               {/*  id={'dr_sara'}*/}

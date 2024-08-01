@@ -86,7 +86,11 @@ const PostsBlock: FC<postsBlockInterface> = ({
   //   }
   // };
 
-  const [type, setType] = useState(category == 'news' ? 'Статьи' : 'Новости');
+  const [type, setType] = useState(
+    category == 'news'
+      ? 'Новости/статьи'
+      : 'Детская дерматология/Дерматовенерология'
+  );
 
   return (
     <div className={'mt-2 pb-10'}>
@@ -119,26 +123,28 @@ const PostsBlock: FC<postsBlockInterface> = ({
           <p
             id={'type_articles'}
             onClick={() => {
-              setType('Статьи');
+              setType('Новости/статьи');
               mutateCategory('news');
             }}
             className={clsx(
-              'text-white cursor-pointer md:text-left text-center md:pl-4 font-bold',
-              type == 'Статьи' ? 'opacity-100 underline' : 'opacity-50'
+              'text-white cursor-pointer md:text-left text-center md:pl-2 font-bold',
+              type == 'Новости/статьи' ? 'opacity-100 underline' : 'opacity-50'
             )}>
-            Статьи
+            Новости/статьи
           </p>
           <p
             id={'type_news'}
             onClick={() => {
-              setType('Новости');
+              setType('Детская дерматология/Дерматовенерология');
               mutateCategory('derma');
             }}
             className={clsx(
               'text-white cursor-pointer md:text-left text-center md:pl-4 font-bold',
-              type == 'Новости' ? 'opacity-100 underline' : 'opacity-50'
+              type == 'Детская дерматология/Дерматовенерология'
+                ? 'opacity-100 underline'
+                : 'opacity-50'
             )}>
-            Новости
+            Детская дерматология/Дерматовенерология
           </p>
         </div>
       )}
