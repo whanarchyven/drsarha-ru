@@ -44,7 +44,7 @@ const CallbackBlock = () => {
             onClick={() => {
               router.push('/register');
             }}>
-            Полписаться
+            Подписаться
           </OrangeButton>
         </div>
         <div className={'relative flex items-center justify-center'}>

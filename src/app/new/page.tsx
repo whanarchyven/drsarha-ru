@@ -4,7 +4,6 @@ import PostsBlock from '@/src/widgets/posts-block';
 import React, { useEffect, useState } from 'react';
 import { Steps } from 'intro.js-react';
 import { getArticles } from '@/src/shared/api/get-articles';
-import { format } from 'date-fns';
 
 const postsMock = [
   {
@@ -40,19 +39,29 @@ export type PostType = (typeof postsMock)[0];
 export default function Home() {
   const [posts, setPosts] = useState<PostType[]>([]);
 
-  const fetchPosts = async (category: string) => {
+  const fetchPosts = async (
+    category: string,
+    subcategory: string,
+    search: string,
+    page: number
+  ) => {
     const data: any = await getArticles(
-      format(new Date(), 'yyyy-MM-dd'),
-      category
+      category ?? '',
+      subcategory ?? '',
+      search ?? '',
+      page ?? 0
     );
     setPosts(data);
   };
 
   const [category, setCategory] = useState('news');
+  const [subcategory, setSubCategory] = useState('');
+  const [search, setSearch] = useState('');
+  const [page, setPage] = useState(0);
 
   useEffect(() => {
-    fetchPosts(category);
-  }, [category]);
+    fetchPosts(category, subcategory, search, page);
+  }, [category, subcategory, search, page]);
 
   const [stepsEnabled, setStepsEnabled] = useState(false);
   const [initialStep] = useState(0);
@@ -172,6 +181,12 @@ export default function Home() {
         />
         <MainBlock />
         <PostsBlock
+          search={search}
+          page={page}
+          setPage={setPage}
+          setSearch={setSearch}
+          subCategory={subcategory}
+          mutateSubCategory={setSubCategory}
           category={category}
           mutateCategory={setCategory}
           displayTitle={true}

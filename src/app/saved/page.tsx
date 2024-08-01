@@ -20,6 +20,9 @@ export default function Home() {
   }, []);
 
   const [category, setCategory] = useState('news');
+  const [subcategory, setSubCategory] = useState('');
+  const [search, setSearch] = useState('');
+  const [page, setPage] = useState(0);
 
   return (
     <>
@@ -31,6 +34,13 @@ export default function Home() {
           </p>
         </div>
         <PostsBlock
+          hideFilter
+          search={search}
+          page={page}
+          setPage={setPage}
+          setSearch={setSearch}
+          subCategory={subcategory}
+          mutateSubCategory={setSubCategory}
           category={category}
           mutateCategory={setCategory}
           displaySaveBtn={true}

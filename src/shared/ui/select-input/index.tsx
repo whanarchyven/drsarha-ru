@@ -25,12 +25,19 @@ const SearchInput: FC<searchInputInterface> = ({
         defaultValue={'Категория'}
         value={value}
         onChange={(event) => {
-          mutateFunc(event.target.value);
+          if (event.target.value == 'Все') {
+            mutateFunc('');
+          } else {
+            mutateFunc(event.target.value);
+          }
         }}
         placeholder={''}
         className={
           'bg-transparent placeholder:text-white placeholder:text-opacity-50 h-full outline-0 cursor-pointer text-white text-[1rem] md:text-sm w-full'
         }>
+        <option selected={value == 'Все'} value={'Все'}>
+          Все
+        </option>
         {options.map((option) => (
           <option key={option} className={'text-black'}>
             {option}

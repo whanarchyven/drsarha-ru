@@ -7,6 +7,8 @@ import clsx from 'clsx';
 import { PostType } from '@/src/app/new/page';
 import { getProfile } from '@/src/shared/api/get-profile';
 import { savePost } from '@/src/shared/api/save-post';
+import SelectInput from '@/src/shared/ui/select-input';
+import SearchInput from '@/src/shared/ui/search-input';
 
 interface postsBlockInterface {
   posts: PostType[];
@@ -15,6 +17,13 @@ interface postsBlockInterface {
   displaySaveBtn?: boolean;
   category: string;
   mutateCategory: (category: string) => any;
+  subCategory: string;
+  mutateSubCategory: (subcategory: string) => any;
+  search: string;
+  setSearch: (search: string) => any;
+  page: number;
+  setPage: (page: number) => any;
+  hideFilter?: boolean;
 }
 
 const PostsBlock: FC<postsBlockInterface> = ({
@@ -24,6 +33,11 @@ const PostsBlock: FC<postsBlockInterface> = ({
   locale,
   mutateCategory,
   category,
+  mutateSubCategory,
+  search,
+  setSearch,
+  subCategory,
+  hideFilter,
 }) => {
   const [gridDisplayMode, setGridDisplayMode] =
     useState<VariantProps<typeof cvaPostGrid>['mode']>('grid');
@@ -86,31 +100,27 @@ const PostsBlock: FC<postsBlockInterface> = ({
   //   }
   // };
 
-  const [type, setType] = useState(
-    category == 'news'
-      ? 'Новости/статьи'
-      : 'Детская дерматология/Дерматовенерология'
-  );
+  const [type, setType] = useState(category == 'news' ? 'Новости' : 'Статьи');
 
   return (
     <div className={'mt-2 pb-10'}>
       <div className={'flex justify-end gap-1 md:gap-4'}>
-        {/*<SelectInput*/}
-        {/*  className={'w-1/3'}*/}
-        {/*  mutateFunc={setCategory}*/}
-        {/*  value={category}*/}
-        {/*  options={*/}
-        {/*    locale == 'en'*/}
-        {/*      ? ['Dermatology', 'Pediatric', 'Venereology']*/}
-        {/*      : ['Дерматология', 'Педиатрия', 'Дермато-венерология']*/}
-        {/*  }*/}
-        {/*/>*/}
-        {/*<SearchInput*/}
-        {/*  className={'w-2/3 md:w-full'}*/}
-        {/*  mutateFunc={setSearchString}*/}
-        {/*  value={searchString}*/}
-        {/*  placeholder={locale == 'en' ? 'Search...' : 'Поиск...'}*/}
-        {/*/>*/}
+        {!hideFilter && (
+          <>
+            <SelectInput
+              className={'w-1/3'}
+              mutateFunc={mutateSubCategory}
+              value={subCategory}
+              options={['Детская дерматология', 'Дерматовенерология']}
+            />
+            <SearchInput
+              className={'w-2/3 md:w-full'}
+              mutateFunc={setSearch}
+              value={search}
+              placeholder={locale == 'en' ? 'Search...' : 'Поиск...'}
+            />
+          </>
+        )}
         <GridPicker
           className={'hidden md:flex'}
           mutateFunc={setGridDisplayMode}
@@ -123,28 +133,26 @@ const PostsBlock: FC<postsBlockInterface> = ({
           <p
             id={'type_articles'}
             onClick={() => {
-              setType('Новости/статьи');
+              setType('Новости');
               mutateCategory('news');
             }}
             className={clsx(
               'text-white cursor-pointer md:text-left text-center md:pl-2 font-bold',
-              type == 'Новости/статьи' ? 'opacity-100 underline' : 'opacity-50'
+              type == 'Новости' ? 'opacity-100 underline' : 'opacity-50'
             )}>
-            Новости/статьи
+            Новости
           </p>
           <p
             id={'type_news'}
             onClick={() => {
-              setType('Детская дерматология/Дерматовенерология');
-              mutateCategory('derma');
+              setType('Статьи');
+              mutateCategory('articles');
             }}
             className={clsx(
               'text-white cursor-pointer md:text-left text-center md:pl-4 font-bold',
-              type == 'Детская дерматология/Дерматовенерология'
-                ? 'opacity-100 underline'
-                : 'opacity-50'
+              type == 'Статьи' ? 'opacity-100 underline' : 'opacity-50'
             )}>
-            Детская дерматология/Дерматовенерология
+            Статьи
           </p>
         </div>
       )}
