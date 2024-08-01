@@ -73,6 +73,7 @@ const Features = () => {
             {/* Левый блок с текстом */}
             <div className="w-2/5">
               <motion.div
+                id={'screen1'}
                 ref={(el) => (sectionsRef.current[0] = el)}
                 data-section="screen1"
                 className={
@@ -106,6 +107,7 @@ const Features = () => {
                 </motion.div>
               </motion.div>
               <motion.div
+                id={'screen2'}
                 ref={(el) => (sectionsRef.current[1] = el)}
                 data-section="screen2"
                 className={
@@ -139,6 +141,7 @@ const Features = () => {
                 </motion.div>
               </motion.div>
               <motion.div
+                id={'screen3'}
                 ref={(el) => (sectionsRef.current[2] = el)}
                 data-section="screen3"
                 className={
@@ -203,12 +206,14 @@ const Features = () => {
                 className={'absolute z-50 right-0 flex top-1/2 flex-col gap-1'}>
                 {[0, 1, 2].map((dot) => {
                   return (
-                    <div
+                    <a
+                      href={`#screen${dot + 1}`}
+                      onClick={() => {}}
                       key={dot}
                       className={clsx(
                         'bg-white cursor-pointer w-1 h-1 rounded-full',
                         dot == activeSection ? 'opacity-100' : 'opacity-30'
-                      )}></div>
+                      )}></a>
                   );
                 })}
               </div>

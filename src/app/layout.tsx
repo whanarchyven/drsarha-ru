@@ -1,10 +1,13 @@
+'use client';
 import './globals.css';
 import React from 'react';
-import type { Metadata } from 'next';
 import ReduxProvider from '@/src/shared/store/ReduxProvider';
 import { RemResizeScript } from '@/src/features/rem-resize';
 import Navbar from '@/src/widgets/navbar';
 import Footer from '@/src/widgets/footer';
+import clsx from 'clsx';
+import { NextRequest, NextResponse } from 'next/server';
+import { usePathname } from 'next/navigation';
 
 // import 'swiper/css';
 // import 'swiper/css/navigation';
@@ -24,17 +27,31 @@ import Footer from '@/src/widgets/footer';
 // });
 // ? clsx(Roboto.variable) для body
 
-export const metadata: Metadata = {
-  title: 'News',
-  description: 'latest news from the world of dermatology',
-};
+// export const metadata: Metadata = {
+//   title: 'News',
+//   description: 'latest news from the world of dermatology',
+// };
 
 interface RootLayoutProps {
   children: React.ReactNode;
   params: any;
 }
 
+export function middleware(request: NextRequest) {
+  return NextResponse.next({
+    request: {
+      // New request headers
+      // @ts-expect-error aue
+      'x-pathname': request.nextUrl.pathname,
+    },
+  });
+}
+
 export default function RootLayout({ children, ...rest }: RootLayoutProps) {
+  // const pathname=headersList.get("x-pathname")
+  const pathname = usePathname();
+  const displayLayout = !pathname.includes('articles');
+
   return (
     <html lang="ru">
       <head>
@@ -52,16 +69,19 @@ export default function RootLayout({ children, ...rest }: RootLayoutProps) {
         <ReduxProvider {...rest}>
           <div id="app">
             <div className={''}>
-              <Navbar />
-              <div className={'pt-10 md:px-10 px-1'}>{children}</div>
-              <Footer />
-              <img
-                id={'dr_sara'}
-                className={
-                  'fixed drop-shadow-2xl bottom-4 right-4 w-[20rem] h-auto cursor-pointer'
-                }
-                src={'/images/dr_sara.svg'}
-              />
+              {displayLayout && <Navbar />}
+              {/*{JSON.stringify(headersList)}*/}
+              <div className={clsx(displayLayout ? 'md:px-10 px-1 pt-10' : '')}>
+                {children}
+              </div>
+              {displayLayout && <Footer />}
+              {/*<img*/}
+              {/*  id={'dr_sara'}*/}
+              {/*  className={*/}
+              {/*    'fixed drop-shadow-2xl bottom-4 right-4 w-[20rem] h-auto cursor-pointer'*/}
+              {/*  }*/}
+              {/*  src={'/images/dr_sara.svg'}*/}
+              {/*/>*/}
             </div>
           </div>
         </ReduxProvider>

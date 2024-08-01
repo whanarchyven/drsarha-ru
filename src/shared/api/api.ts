@@ -12,6 +12,10 @@ export interface IResponse<D = any> {
   errors: Error[];
 }
 
+const backend_url = 'http://localhost:3001';
+
 export const API = {
-  getTestApiEndpoint: `/endpoint/name`,
+  registerUser: `${backend_url}/register`,
+  login: `${backend_url}/login`,
+  getArticles: `${backend_url}/articles`,
 };

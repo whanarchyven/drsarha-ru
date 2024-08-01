@@ -6,7 +6,9 @@ import BurgerIcon from '@/public/icons/burger.svg';
 import CloseIcon from '@/public/icons/close.svg';
 import { cva } from 'class-variance-authority';
 import { usePathname } from 'next/navigation';
-import { Steps } from 'intro.js-react';
+// ESM
+import { differenceInCalendarDays } from 'date-fns';
+
 import 'intro.js/introjs.css';
 
 const Navbar: FC = () => {
@@ -69,123 +71,29 @@ const Navbar: FC = () => {
   const pathname = usePathname();
 
   const [menuOpen, setMenuOpen] = useState(false);
-  const [username, setUsername] = useState('');
-  const [stepsEnabled, setStepsEnabled] = useState(false);
-  const [initialStep] = useState(0);
+  const [user, setUser] = useState<{ email: string }>({ email: 'Войти' });
 
-  const steps = [
-    {
-      element: '#new',
-      intro:
-        'В данном разделе вы можете ознакомиться с научными статьями и публикациями',
-      position: 'right',
-      tooltipClass:
-        '!bg-white !bg-opacity-10 !backdrop-blur-xl !text-white !text-sm',
-      highlightClass: '!border-white',
-    },
-    {
-      element: '#saved',
-      intro:
-        'В данном разделе вы можете просмотреть ваши сохраненные материалы',
-      position: 'right',
-      tooltipClass:
-        '!bg-white !bg-opacity-10 !backdrop-blur-xl !text-white !text-sm',
-      highlightClass: '!border-white',
-    },
-    {
-      element: '#viewed',
-      intro:
-        'В данном разделе вы можете просмотреть материалы, которые вы уже прочитали',
-      position: 'left',
-      tooltipClass:
-        '!bg-white !bg-opacity-10 !backdrop-blur-xl !text-white !text-sm',
-      highlightClass: '!border-white',
-    },
-    {
-      element: '#profile',
-      intro:
-        'Ваш личный кабинет, где вы можете обновить персональные данные, продлить подписки или проверить их актуальность',
-      position: 'left',
-      tooltipClass:
-        '!bg-white !bg-opacity-10 !backdrop-blur-xl !text-white !text-sm',
-      highlightClass: '!border-white',
-    },
-    {
-      element: '#type_articles',
-      intro:
-        'Нажимайте, чтобы изучить все международные статьи и публикации, использовать материалы для научных исследований и находить ссылки на первоисточники',
-      position: 'right',
-      tooltipClass:
-        '!bg-white !bg-opacity-10 !backdrop-blur-xl !text-white !text-sm',
-      highlightClass: '!border-white',
-    },
-    {
-      element: '#type_news',
-      intro:
-        'Нажимайте, чтобы быть в курсе всех актуальных мировых новостей ежедневно',
-      position: 'right',
-      tooltipClass:
-        '!bg-white !bg-opacity-10 !backdrop-blur-xl !text-white !text-sm',
-      highlightClass: '!border-white',
-    },
-    {
-      element: '#post_read',
-      intro: 'Нажимайте, чтобы открыть полный текст научной статьи',
-      position: 'right',
-      tooltipClass:
-        '!bg-white !bg-opacity-10 !backdrop-blur-xl !text-white !text-sm',
-      highlightClass: '!border-white',
-    },
-    {
-      element: '#post_save',
-      intro: 'Нажимайте, чтобы сохранить статью и легко вернуться к ней позже',
-      position: 'right',
-      tooltipClass:
-        '!bg-white !bg-opacity-10 !backdrop-blur-xl !text-white !text-sm',
-      highlightClass: '!border-white',
-    },
-    {
-      element: '#dr_sara',
-      intro:
-        'Нажимайте и задавайте вопросы – ваш персональный AI-помощник, навигатор по научным материалам, поможет быстро найти ответы и подготовить краткую аннотацию по вашему запросу',
-      position: 'left',
-      tooltipClass:
-        '!bg-white !bg-opacity-10 !backdrop-blur-xl !text-white !text-sm',
-      highlightClass: '!border-white',
-    },
-  ];
-
-  const startTour = () => {
-    setStepsEnabled(true);
-  };
-
-  const onExit = () => {
-    setStepsEnabled(false);
-  };
+  const [isAuthorized, setIsAuthorized] = useState(false);
 
   useEffect(() => {
-    setUsername(localStorage.getItem('name') ?? 'Профиль');
-    if (!localStorage.getItem('education_passed')) {
-      startTour();
-      localStorage.setItem('education_passed', 'true');
+    let isValid = false;
+    if (
+      localStorage.getItem('user') &&
+      localStorage.getItem('lastLogin') &&
+      localStorage.getItem('token')
+    ) {
+      const user = JSON.parse(localStorage.getItem('user') ?? '');
+      const lastLogin = new Date(localStorage.getItem('lastLogin') ?? '');
+      if (differenceInCalendarDays(new Date(), lastLogin) < 1) {
+        isValid = true;
+        setUser(user);
+      }
     }
+    setIsAuthorized(isValid);
   }, []);
 
   return (
     <div className={cvaRoot()}>
-      <Steps
-        enabled={stepsEnabled}
-        steps={steps}
-        initialStep={initialStep}
-        onExit={onExit}
-        options={{
-          nextLabel: 'Дальше',
-          overlayOpacity: 0.5,
-          prevLabel: 'Назад',
-          doneLabel: 'Завершить',
-          scrollToElement: true,
-        }}
-      />
       <div className={cvaContainer()}>
         <div
           onClick={() => {
@@ -200,24 +108,28 @@ const Navbar: FC = () => {
           </Link>
         </div>
         <div className={cvaLinksContainer()}>
-          {links.map((item, counter) => (
-            <Link
-              id={item.link}
-              key={counter}
-              className={cvaLinkLabel({
-                isActive: pathname.includes(item.link),
-              })}
-              href={`/${item.link}`}>
-              {item.name}
-            </Link>
-          ))}
+          {links.map((item, counter) => {
+            if (isAuthorized) {
+              return (
+                <Link
+                  id={item.link}
+                  key={counter}
+                  className={cvaLinkLabel({
+                    isActive: pathname.includes(item.link),
+                  })}
+                  href={`/${item.link}`}>
+                  {item.name}
+                </Link>
+              );
+            }
+          })}
         </div>
         <Link
           id={'profile'}
-          href={'/profile'}
+          href={isAuthorized ? '/profile' : '/login'}
           className={cvaAccountContainer()}>
           <AccountIcon className={cvaAccountIcon()} />
-          <p className={cvaLinkLabel({ isActive: false })}>{username}</p>
+          <p className={cvaLinkLabel({ isActive: false })}>{user.email}</p>
         </Link>
       </div>
       {menuOpen && (

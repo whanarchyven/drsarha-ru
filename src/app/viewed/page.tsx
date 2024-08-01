@@ -2,16 +2,24 @@
 import SavedIcon from '@/public/icons/view_filled.svg';
 import { useEffect, useState } from 'react';
 import PostsBlock from '@/src/widgets/posts-block';
+import { PostType } from '@/src/app/new/page';
+import { getProfile } from '@/src/shared/api/get-profile';
+
 export default function Home() {
-  const [savedPosts, setSavedPosts] = useState([]);
+  const [savedPosts, setSavedPosts] = useState<PostType[]>([]);
+
+  const fetchSaved = async () => {
+    const user = await getProfile();
+    if (user.viewed) {
+      setSavedPosts(user.viewed);
+    }
+  };
 
   useEffect(() => {
-    const savedPostsString = localStorage.getItem('viewedPosts');
-    if (savedPostsString) {
-      const temp = JSON.parse(savedPostsString);
-      setSavedPosts(temp);
-    }
+    fetchSaved();
   }, []);
+
+  const [category, setCategory] = useState('news');
 
   return (
     <>
@@ -22,7 +30,12 @@ export default function Home() {
             Прочитанные статьи
           </p>
         </div>
-        <PostsBlock displaySaveBtn={true} posts={savedPosts} />
+        <PostsBlock
+          category={category}
+          mutateCategory={setCategory}
+          displaySaveBtn={true}
+          posts={savedPosts}
+        />
       </main>
     </>
   );

@@ -14,6 +14,7 @@ interface InputRowInterface {
   mutateFunc: (arg: any) => any;
   type: 'string' | 'date' | 'password' | 'gender';
   saveKey: string;
+  saveFunction: () => any;
 }
 
 const InputRow: FC<InputRowInterface> = ({
@@ -21,16 +22,12 @@ const InputRow: FC<InputRowInterface> = ({
   value,
   mutateFunc,
   type,
-  saveKey,
+  saveFunction,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [startDate, setStartDate] = useState(
     type == 'date' ? value : new Date()
   );
-
-  const saveItem = () => {
-    localStorage.setItem(saveKey, value);
-  };
 
   return (
     <div
@@ -100,7 +97,7 @@ const InputRow: FC<InputRowInterface> = ({
           <SaveIcon
             onClick={() => {
               setIsEditing(false);
-              saveItem();
+              saveFunction();
             }}
             className={'w-3 h-3 cursor-pointer'}
           />

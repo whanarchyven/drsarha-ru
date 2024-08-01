@@ -12,10 +12,10 @@
     "lint": "next lint",
     "test": "lint-staged",
     "format": "prettier --check .",
-    "format:fix": "prettier --write --list-different .",
-    "prepare": "husky install"
+    "format:fix": "prettier --write --list-different ."
   },
   "dependencies": {
+    "@elysiajs/eden": "^1.1.2",
     "@popperjs/core": "^2.11.8",
     "@reduxjs/toolkit": "^1.9.5",
     "@sentry/nextjs": "^7.93.0",
@@ -29,6 +29,7 @@
     "class-variance-authority": "^0.6.1",
     "clsx": "^1.2.1",
     "date-fns": "^2.30.0",
+    "elysia": "^1.1.4",
     "eslint-config-next": "13.4.12",
     "eslint-plugin-next": "^0.0.0",
     "formik": "^2.4.3",

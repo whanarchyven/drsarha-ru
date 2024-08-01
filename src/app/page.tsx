@@ -1,18 +1,18 @@
 'use client';
-import MainBlock from '@/src/widgets/main-block';
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+
+import FirstBlock from '@/src/widgets/landing/first-block';
+import Features from '@/src/widgets/landing/features';
+import Advantages from '@/src/widgets/landing/advantages';
+import CallbackBlock from '@/src/widgets/landing/callback-block';
 
 export default function Home() {
-  const router = useRouter();
-  useEffect(() => {
-    router.push('/new');
-  }, [router]);
-
   return (
     <>
       <main>
-        <MainBlock />
+        <FirstBlock />
+        <Features />
+        <Advantages />
+        <CallbackBlock />
       </main>
     </>
   );

@@ -1,23 +1,20 @@
 'use client';
 import { FC, useEffect, useState } from 'react';
 import GridPicker from '@/src/shared/ui/grid-picker';
-import SearchInput from '@/src/shared/ui/search-input';
-import SelectInput from '@/src/shared/ui/select-input';
 import { cva, VariantProps } from 'class-variance-authority';
 import Post from '@/src/entities/post';
 import clsx from 'clsx';
+import { PostType } from '@/src/app/new/page';
+import { getProfile } from '@/src/shared/api/get-profile';
+import { savePost } from '@/src/shared/api/save-post';
 
 interface postsBlockInterface {
-  posts: {
-    id: string;
-    title: string;
-    description: string;
-    source: string;
-    file: string;
-  }[];
+  posts: PostType[];
   locale?: string;
   displayTitle?: boolean;
   displaySaveBtn?: boolean;
+  category: string;
+  mutateCategory: (category: string) => any;
 }
 
 const PostsBlock: FC<postsBlockInterface> = ({
@@ -25,9 +22,9 @@ const PostsBlock: FC<postsBlockInterface> = ({
   displayTitle,
   displaySaveBtn,
   locale,
+  mutateCategory,
+  category,
 }) => {
-  const [searchString, setSearchString] = useState('');
-  const [category, setCategory] = useState('Категория');
   const [gridDisplayMode, setGridDisplayMode] =
     useState<VariantProps<typeof cvaPostGrid>['mode']>('grid');
 
@@ -42,72 +39,74 @@ const PostsBlock: FC<postsBlockInterface> = ({
 
   const [savedPosts, setSavedPosts] = useState<typeof posts>([]);
 
-  useEffect(() => {
-    const savedPostsString = localStorage.getItem('savedPosts');
-    if (savedPostsString) {
-      const temp = JSON.parse(savedPostsString);
-      setSavedPosts(temp);
+  const fetchSaved = async () => {
+    const user = await getProfile();
+    if (user.saved) {
+      setSavedPosts(user.saved);
     }
-  }, []);
-
-  const savePost = (post: (typeof posts)[0]) => {
-    const temp = [...savedPosts, post];
-    const jsonStr = JSON.stringify(temp);
-    localStorage.setItem('savedPosts', jsonStr);
-    setSavedPosts([...savedPosts, post]);
   };
-
-  const deletePost = (post: (typeof posts)[0]) => {
-    const temp = [...savedPosts];
-    const index = temp.findIndex((item) => item.id == post.id);
-    if (index != -1) {
-      temp.splice(index, 1);
-    }
-    const jsonStr = JSON.stringify(temp);
-    localStorage.setItem('savedPosts', jsonStr);
-    setSavedPosts([...temp]);
-  };
-
-  const [viewedPosts, setViewedPosts] = useState<typeof posts>([]);
 
   useEffect(() => {
-    const savedPostsString = localStorage.getItem('viewedPosts');
-    if (savedPostsString) {
-      const temp = JSON.parse(savedPostsString);
-      setViewedPosts(temp);
-    }
+    fetchSaved();
   }, []);
 
-  const viewPost = (post: (typeof posts)[0]) => {
-    if (viewedPosts.findIndex((item) => item.id == post.id) == -1) {
-      const temp = [...viewedPosts, post];
-      const jsonStr = JSON.stringify(temp);
-      localStorage.setItem('viewedPosts', jsonStr);
-      setViewedPosts([...viewedPosts, post]);
-    }
+  const savePostCallback = async (post: (typeof posts)[0]) => {
+    const saved = await savePost(post);
+    fetchSaved();
+    console.log(saved);
   };
+  //
+  // const deletePost = (post: (typeof posts)[0]) => {
+  //   const temp = [...savedPosts];
+  //   const index = temp.findIndex((item) => item.id == post.id);
+  //   if (index != -1) {
+  //     temp.splice(index, 1);
+  //   }
+  //   const jsonStr = JSON.stringify(temp);
+  //   localStorage.setItem('savedPosts', jsonStr);
+  //   setSavedPosts([...temp]);
+  // };
 
-  const [type, setType] = useState('Статьи');
+  // const [viewedPosts, setViewedPosts] = useState<typeof posts>([]);
+  //
+  // useEffect(() => {
+  //   const savedPostsString = localStorage.getItem('viewedPosts');
+  //   if (savedPostsString) {
+  //     const temp = JSON.parse(savedPostsString);
+  //     setViewedPosts(temp);
+  //   }
+  // }, []);
+  //
+  // const viewPost = (post: (typeof posts)[0]) => {
+  //   if (viewedPosts.findIndex((item) => item.id == post.id) == -1) {
+  //     const temp = [...viewedPosts, post];
+  //     const jsonStr = JSON.stringify(temp);
+  //     localStorage.setItem('viewedPosts', jsonStr);
+  //     setViewedPosts([...viewedPosts, post]);
+  //   }
+  // };
+
+  const [type, setType] = useState(category == 'news' ? 'Статьи' : 'Новости');
 
   return (
     <div className={'mt-2 pb-10'}>
-      <div className={'flex justify-between gap-1 md:gap-4'}>
-        <SelectInput
-          className={'w-1/3'}
-          mutateFunc={setCategory}
-          value={category}
-          options={
-            locale == 'en'
-              ? ['Dermatology', 'Pediatric', 'Venereology']
-              : ['Дерматология', 'Педиатрия', 'Дермато-венерология']
-          }
-        />
-        <SearchInput
-          className={'w-2/3 md:w-full'}
-          mutateFunc={setSearchString}
-          value={searchString}
-          placeholder={locale == 'en' ? 'Search...' : 'Поиск...'}
-        />
+      <div className={'flex justify-end gap-1 md:gap-4'}>
+        {/*<SelectInput*/}
+        {/*  className={'w-1/3'}*/}
+        {/*  mutateFunc={setCategory}*/}
+        {/*  value={category}*/}
+        {/*  options={*/}
+        {/*    locale == 'en'*/}
+        {/*      ? ['Dermatology', 'Pediatric', 'Venereology']*/}
+        {/*      : ['Дерматология', 'Педиатрия', 'Дермато-венерология']*/}
+        {/*  }*/}
+        {/*/>*/}
+        {/*<SearchInput*/}
+        {/*  className={'w-2/3 md:w-full'}*/}
+        {/*  mutateFunc={setSearchString}*/}
+        {/*  value={searchString}*/}
+        {/*  placeholder={locale == 'en' ? 'Search...' : 'Поиск...'}*/}
+        {/*/>*/}
         <GridPicker
           className={'hidden md:flex'}
           mutateFunc={setGridDisplayMode}
@@ -121,6 +120,7 @@ const PostsBlock: FC<postsBlockInterface> = ({
             id={'type_articles'}
             onClick={() => {
               setType('Статьи');
+              mutateCategory('news');
             }}
             className={clsx(
               'text-white cursor-pointer md:text-left text-center md:pl-4 font-bold',
@@ -132,6 +132,7 @@ const PostsBlock: FC<postsBlockInterface> = ({
             id={'type_news'}
             onClick={() => {
               setType('Новости');
+              mutateCategory('derma');
             }}
             className={clsx(
               'text-white cursor-pointer md:text-left text-center md:pl-4 font-bold',
@@ -147,22 +148,26 @@ const PostsBlock: FC<postsBlockInterface> = ({
             locale={locale}
             key={counter}
             viewFunc={() => {
-              viewPost(post);
+              // viewPost(post);
             }}
             saveFunc={() => {
-              savePost(post);
+              savePostCallback(post);
             }}
             deleteFunc={() => {
-              deletePost(post);
+              // deletePost(post);
             }}
             mode={gridDisplayMode}
             displayView={'top'}
             displaySaveBtn={!displaySaveBtn}
             isViewed={
-              Boolean(viewedPosts.find((item) => item.id == post.id)) ?? false
+              // Boolean(viewedPosts.find((item) => item.id == post.id)) ?? false
+              false
             }
             isSaved={
-              Boolean(savedPosts.find((item) => item.id == post.id)) ?? false
+              Boolean(
+                savedPosts.find((item) => item.articleUrl == post.articleUrl)
+              ) ?? false
+              // false
             }
             {...post}
           />

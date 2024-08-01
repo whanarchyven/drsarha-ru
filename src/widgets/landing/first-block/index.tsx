@@ -115,7 +115,7 @@ const FirstBlock = () => {
             className={
               'w-[40rem] aspect-square absolute right-0 z-30 bottom-0'
             }>
-            <img src={'/images/landing/sara_main.png'} />
+            <img className={'w-full'} src={'/images/sarah.gif'} />
           </motion.div>
 
           <motion.div

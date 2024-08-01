@@ -7,12 +7,10 @@ import clsx from 'clsx';
 import { cva, VariantProps } from 'class-variance-authority';
 import ActionButton from '@/src/shared/ui/action-button';
 import Link from 'next/link';
+import { PostType } from '@/src/app/new/page';
 
-interface postInterface extends VariantProps<typeof cvaRoot> {
+interface postInterface extends VariantProps<typeof cvaRoot>, PostType {
   title: string;
-  description: string;
-  source: string;
-  file: string;
   isSaved?: boolean;
   isViewed?: boolean;
   displayView: 'top' | 'bottom';
@@ -67,9 +65,9 @@ const cvaIcon = cva(['w-1 md:w-2'], {
 
 const Post: FC<postInterface> = ({
   title,
-  description,
+  content,
+  articleUrl,
   isSaved,
-  file,
   isViewed,
   displayView,
   mode,
@@ -87,7 +85,9 @@ const Post: FC<postInterface> = ({
           <ViewIcon className={'w-3 opacity-50'} />
         )}
       </div>
-      <p className={cvaDescription({ mode: mode })}>{description}</p>
+      <p className={cvaDescription({ mode: mode })}>
+        {content.slice(0, 400)} ...
+      </p>
       {/*<p className={'md:text-md text-sm opacity-50'}>Источник: {source}</p>*/}
       <div className={'flex gap-3 items-center'}>
         <Link
@@ -96,7 +96,7 @@ const Post: FC<postInterface> = ({
           onClick={() => {
             viewFunc();
           }}
-          href={file}>
+          href={`/articles?url=${articleUrl}`}>
           <ActionButton
             label={locale == 'en' ? 'Read' : 'Читать'}
             icon={<DocumentIcon className={cvaIcon({ filled: true })} />}
