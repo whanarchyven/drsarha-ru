@@ -4,7 +4,7 @@ import PostsBlock from '@/src/widgets/posts-block';
 import React, { useEffect, useState } from 'react';
 import { Steps } from 'intro.js-react';
 import { getArticles } from '@/src/shared/api/get-articles';
-import { format, subDays } from 'date-fns';
+import { format } from 'date-fns';
 
 const postsMock = [
   {
@@ -42,7 +42,7 @@ export default function Home() {
 
   const fetchPosts = async (category: string) => {
     const data: any = await getArticles(
-      format(subDays(new Date(), 1), 'yyyy-MM-dd'),
+      format(new Date(), 'yyyy-MM-dd'),
       category
     );
     setPosts(data);
