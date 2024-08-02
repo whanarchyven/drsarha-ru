@@ -75,14 +75,11 @@ const CardTile: FC<CardTileInterface> = ({
   return (
     <motion.div
       className="relative w-full h-[30rem]"
-      style={{ perspective: 1000, transformStyle: 'preserve-3d' }}>
+      style={{ perspective: 1000 }}>
       {type == 'dark' && <div className={cvaBackdropCard({ align })}></div>}
       <motion.div
-        className={clsx('absolute backdrop-blur-2xl z-50 w-full h-full', {
-          'rotate-y-180': isOpen,
-        })}
-        style={{ backfaceVisibility: 'hidden' }}
-        animate={{ rotateY: isOpen ? 180 : 0 }}
+        className={clsx('absolute backdrop-blur-2xl z-50 w-full h-full')}
+        animate={{ scaleY: isOpen ? 0 : 1 }}
         transition={{ duration: 0.6 }}>
         <div className={cvaRoot({ type })}>
           <div className={cvaCard()}>
@@ -91,7 +88,9 @@ const CardTile: FC<CardTileInterface> = ({
             )}
             <div className="flex flex-col gap-3 h-full justify-between">
               <div className={cvaTitle({ type })}>{title}</div>
-              <p onClick={() => setIsOpen(true)} className={cvaAbout({ type })}>
+              <p
+                onClick={() => setIsOpen(!isOpen)}
+                className={cvaAbout({ type })}>
                 Подробнее
               </p>
             </div>
@@ -100,17 +99,14 @@ const CardTile: FC<CardTileInterface> = ({
         </div>
       </motion.div>
       <motion.div
-        className={clsx('absolute w-full backdrop-blur-2xl h-full', {
-          'rotate-y-180': !isOpen,
-        })}
-        style={{ backfaceVisibility: 'hidden' }}
-        animate={{ rotateY: isOpen ? 0 : -180 }}
+        className={clsx('absolute w-full backdrop-blur-2xl h-full')}
+        animate={{ scaleY: isOpen ? 1 : 0 }}
         transition={{ duration: 0.6 }}>
         <div className={cvaRoot({ type })}>
           <div className="h-[20rem]">
             <div className="flex flex-col gap-3">
               <p
-                onClick={() => setIsOpen(false)}
+                onClick={() => setIsOpen(!isOpen)}
                 className={clsx('cursor-pointer', cvaDescription({ type }))}>
                 ← Назад
               </p>
