@@ -106,7 +106,7 @@ const FirstBlock = () => {
             className={
               'p-2 whitespace-nowrap flex justify-end w-[20rem] font-bold text-white green-shadow absolute -right-3 z-20 top-[15rem] backdrop-blur-3xl bg-[#DDDDDD] bg-opacity-25 rounded-r-[2rem]'
             }>
-            Доктор <br /> сара
+            Доктор <br /> Сара
           </motion.div>
           <motion.div
             initial={{ y: '0', opacity: 0 }}
@@ -145,8 +145,19 @@ const FirstBlock = () => {
             <QuestionIcon />
           </motion.div>
         </div>
+        {/*<img src={'/images/asset_lines.svg'} className={'absolute w-[10rem] -bottom-[14.2%] z-50 -right-[4.45%] '}/>*/}
       </div>
-      <div className={'h-screen flex justify-between items-center'}>
+      <div className={'h-screen flex relative justify-between items-center'}>
+        <div
+          className={
+            'w-[50rem] aspect-square bg-white absolute rounded-full z-0 blur-[12rem] -bottom-10'
+          }
+        />
+        <div
+          className={
+            'w-[50rem] aspect-square bg-white absolute rounded-full z-0 blur-[12rem] right-2 -top-10'
+          }
+        />
         <div className={'w-full grid grid-cols-2 gap-3'}>
           <CardTile
             type={'dark'}
@@ -159,11 +170,12 @@ const FirstBlock = () => {
             }
             description={
               <p>
-                Быть на передовой науки и медицины стало проще! Подпишитесь на
-                наш сервис и получайте последние новости и открытия в
-                дерматологии прямо на родном языке. Забудьте о долгих поисках и
-                устаревшей информации – теперь вы всегда будете в курсе самых
-                актуальных событий и трендов в вашей сфере.
+                Быть на передовой науки и медицины стало проще!
+                <br />
+                Подпишитесь на наш сервис и получайте последние новости и
+                открытия в мире дерматологии прямо на родном языке. Забудьте о
+                долгих поисках и устаревшей информации – теперь вы всегда будете
+                в курсе самых актуальных событий и трендов в вашей сфере.
               </p>
             }
           />

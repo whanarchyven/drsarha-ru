@@ -150,6 +150,7 @@ const Chat = () => {
         </div>
       ) : (
         <div
+          id={'dr_sara'}
           onClick={() => {
             setIsChatOpen(true);
           }}

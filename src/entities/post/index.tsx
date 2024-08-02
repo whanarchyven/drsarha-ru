@@ -19,6 +19,8 @@ interface postInterface extends VariantProps<typeof cvaRoot>, PostType {
   viewFunc: () => any;
   displaySaveBtn?: boolean;
   locale?: string;
+  key: string;
+  id?: string;
 }
 
 const cvaRoot = cva(
@@ -64,8 +66,8 @@ const cvaIcon = cva(['w-1 md:w-2'], {
 });
 
 const Post: FC<postInterface> = ({
-  title,
-  content,
+  translation_human,
+  title_translation_human,
   articleUrl,
   isSaved,
   isViewed,
@@ -76,22 +78,23 @@ const Post: FC<postInterface> = ({
   viewFunc,
   displaySaveBtn,
   locale,
+  id,
 }) => {
   return (
     <div className={clsx(cvaRoot({ mode: mode }))}>
       <div className={'flex items-start justify-between'}>
-        <p className={cvaTitle({ mode: mode })}>{title}</p>
+        <p className={cvaTitle({ mode: mode })}>{title_translation_human}</p>
         {displayView == 'top' && isViewed && (
           <ViewIcon className={'w-3 opacity-50'} />
         )}
       </div>
       <p className={cvaDescription({ mode: mode })}>
-        {content.slice(0, 400)} ...
+        {translation_human.slice(0, 400)} ...
       </p>
       {/*<p className={'md:text-md text-sm opacity-50'}>Источник: {source}</p>*/}
       <div className={'flex gap-3 items-center'}>
         <Link
-          id={'post_read'}
+          id={`post_read${id}`}
           target={'_blank'}
           onClick={() => {
             viewFunc();
@@ -104,7 +107,7 @@ const Post: FC<postInterface> = ({
           />
         </Link>
         {displaySaveBtn && (
-          <div id={'post_save'}>
+          <div id={`post_save${id}`}>
             {isSaved ? (
               <ActionButton
                 label={locale == 'en' ? 'Saved' : 'Сохранено'}

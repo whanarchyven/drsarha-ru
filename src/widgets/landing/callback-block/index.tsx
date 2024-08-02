@@ -1,9 +1,35 @@
-import React from 'react';
+'use client';
+import React, { useState } from 'react';
 import OrangeButton from '@/src/shared/ui/orange-button';
-import { useRouter } from 'next/navigation';
+import { registerUser } from '@/src/shared/api/register';
+import { loginUser } from '@/src/shared/api/login';
+import Link from 'next/link';
 
 const CallbackBlock = () => {
-  const router = useRouter();
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  const [alert, setAlert] = useState('');
+
+  const handlleRegister = async () => {
+    if (confirmPassword == password) {
+      const data = await registerUser(email, phone, password);
+      console.log(data);
+      if (data.userId) {
+        const user = await loginUser(email, password);
+        if (user.token) {
+          localStorage.setItem('user', JSON.stringify(user.user));
+          localStorage.setItem('token', user.token);
+          localStorage.setItem('lastLogin', new Date().toISOString());
+          window.location.href = '/new';
+        }
+      }
+    } else {
+      setAlert('Пароли не совпадают');
+    }
+  };
   return (
     <div className={'h-screen relative'}>
       <div
@@ -15,13 +41,71 @@ const CallbackBlock = () => {
             Подпишитесь сегодня
             <br /> и будьте в курсе!
           </p>
-          <p className={'text-white font-light leading-[150%]'}>
-            Будьте в курсе всех новостей и актуальных публикаций в области
-            дерматологии и педиатрии. Подпишитесь сегодня, чтобы получать свежие
-            статьи, научные исследования и рекомендации от ведущих специалистов.
-            Оставайтесь информированными и следите за последними достижениями в
-            медицинской сфере.
-          </p>
+          <div className={'flex flex-col mb-3 w-full gap-2'}>
+            <input
+              type={'email'}
+              value={email}
+              onChange={(event) => {
+                setEmail(event.target.value);
+              }}
+              placeholder={'Email'}
+              className={
+                'outline-0 font-light placeholder:opacity-50 placeholder:text-white bg-transparent text-white border-opacity-50 border-[2px] border-white rounded-full text-base p-1'
+              }
+            />
+            <input
+              type={'tel'}
+              value={phone}
+              onChange={(event) => {
+                setPhone(event.target.value);
+              }}
+              placeholder={'Номер телефона'}
+              className={
+                'outline-0 font-light placeholder:opacity-50 placeholder:text-white bg-transparent text-white border-opacity-50 border-[2px] border-white rounded-full text-base p-1'
+              }
+            />
+            <input
+              type={'password'}
+              value={password}
+              onChange={(event) => {
+                setPassword(event.target.value);
+              }}
+              placeholder={'Пароль'}
+              className={
+                'outline-0 placeholder:opacity-50 placeholder:text-white bg-transparent text-white border-opacity-50 border-[2px] border-white rounded-full text-base p-1'
+              }
+            />
+            <input
+              type={'password'}
+              value={confirmPassword}
+              onChange={(event) => {
+                setConfirmPassword(event.target.value);
+              }}
+              placeholder={'Повторите пароль'}
+              className={
+                'outline-0 placeholder:opacity-50 placeholder:text-white bg-transparent text-white border-opacity-50 border-[2px] border-white rounded-full text-base p-1'
+              }
+            />
+            <p className={'text-white'}>
+              Уже есть аккаунт?{' '}
+              <Link href={'/login'} className={'underline  cursor-pointer'}>
+                Вход
+              </Link>
+            </p>
+            {alert.length > 0 ? (
+              <p className={'text-red-500'}>{alert}</p>
+            ) : null}
+            <OrangeButton onClick={handlleRegister} className={'!w-1/2'}>
+              Подписаться
+            </OrangeButton>
+          </div>
+          {/*<p className={'text-white font-light leading-[150%]'}>*/}
+          {/*  Будьте в курсе всех новостей и актуальных публикаций в области*/}
+          {/*  дерматологии и педиатрии. Подпишитесь сегодня, чтобы получать свежие*/}
+          {/*  статьи, научные исследования и рекомендации от ведущих специалистов.*/}
+          {/*  Оставайтесь информированными и следите за последними достижениями в*/}
+          {/*  медицинской сфере.*/}
+          {/*</p>*/}
           {/*<input*/}
           {/*  placeholder={'Ваше имя'}*/}
           {/*  className={*/}
@@ -40,12 +124,12 @@ const CallbackBlock = () => {
           {/*    'outline-0 placeholder:opacity-50 bg-transparent text-white border-opacity-50 border-[2px] border-white rounded-full text-md p-1'*/}
           {/*  }*/}
           {/*/>*/}
-          <OrangeButton
-            onClick={() => {
-              router.push('/register');
-            }}>
-            Подписаться
-          </OrangeButton>
+          {/*<OrangeButton*/}
+          {/*  onClick={() => {*/}
+          {/*    router.push('/register');*/}
+          {/*  }}>*/}
+          {/*  Подписаться*/}
+          {/*</OrangeButton>*/}
         </div>
         <div className={'relative flex items-center justify-center'}>
           <div

@@ -109,19 +109,17 @@ const Navbar: FC = () => {
         </div>
         <div className={cvaLinksContainer()}>
           {links.map((item, counter) => {
-            if (isAuthorized) {
-              return (
-                <Link
-                  id={item.link}
-                  key={counter}
-                  className={cvaLinkLabel({
-                    isActive: pathname.includes(item.link),
-                  })}
-                  href={`/${item.link}`}>
-                  {item.name}
-                </Link>
-              );
-            }
+            return (
+              <Link
+                id={item.link}
+                key={counter}
+                className={cvaLinkLabel({
+                  isActive: pathname.includes(item.link),
+                })}
+                href={isAuthorized ? `/${item.link}` : '/register'}>
+                {item.name}
+              </Link>
+            );
           })}
         </div>
         <Link
@@ -146,7 +144,7 @@ const Navbar: FC = () => {
               className={cvaLinkLabel({
                 isActive: pathname.includes(item.link),
               })}
-              href={`/${item.link}`}>
+              href={isAuthorized ? `/${item.link}` : '/register'}>
               {item.name}
             </Link>
           ))}

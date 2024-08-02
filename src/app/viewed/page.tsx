@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import PostsBlock from '@/src/widgets/posts-block';
 import { PostType } from '@/src/app/new/page';
 import { getProfile } from '@/src/shared/api/get-profile';
+import { checkAuth } from '@/src/shared/utils/check-auth';
 
 export default function Home() {
   const [savedPosts, setSavedPosts] = useState<PostType[]>([]);
@@ -16,6 +17,7 @@ export default function Home() {
   };
 
   useEffect(() => {
+    checkAuth();
     fetchSaved();
   }, []);
 

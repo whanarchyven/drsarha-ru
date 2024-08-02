@@ -4,6 +4,7 @@ import PostsBlock from '@/src/widgets/posts-block';
 import React, { useEffect, useState } from 'react';
 import { Steps } from 'intro.js-react';
 import { getArticles } from '@/src/shared/api/get-articles';
+import { checkAuth } from '@/src/shared/utils/check-auth';
 
 const postsMock = [
   {
@@ -37,7 +38,7 @@ const postsMock = [
 
 export type PostType = (typeof postsMock)[0];
 export default function Home() {
-  const [posts, setPosts] = useState<PostType[]>([]);
+  const [posts, setPosts] = useState<PostType[]>(postsMock);
 
   const fetchPosts = async (
     category: string,
@@ -60,6 +61,7 @@ export default function Home() {
   const [page, setPage] = useState(0);
 
   useEffect(() => {
+    checkAuth();
     fetchPosts(category, subcategory, search, page);
   }, [category, subcategory, search, page]);
 
@@ -122,7 +124,7 @@ export default function Home() {
       highlightClass: '!border-white',
     },
     {
-      element: '#post_read',
+      element: '#post_read0',
       intro: 'Нажимайте, чтобы открыть полный текст научной статьи',
       position: 'right',
       tooltipClass:
@@ -130,7 +132,7 @@ export default function Home() {
       highlightClass: '!border-white',
     },
     {
-      element: '#post_save',
+      element: '#post_save0',
       intro: 'Нажимайте, чтобы сохранить статью и легко вернуться к ней позже',
       position: 'right',
       tooltipClass:

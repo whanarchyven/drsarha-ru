@@ -159,8 +159,9 @@ const PostsBlock: FC<postsBlockInterface> = ({
       <div className={cvaPostGrid({ mode: gridDisplayMode })}>
         {posts.map((post, counter) => (
           <Post
+            id={String(counter)}
             locale={locale}
-            key={counter}
+            key={String(counter)}
             viewFunc={() => {
               // viewPost(post);
             }}

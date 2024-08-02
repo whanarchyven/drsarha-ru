@@ -4,6 +4,7 @@ import InputRow from '@/src/shared/ui/input-row';
 import { useEffect, useState } from 'react';
 import { updateProfile } from '@/src/shared/api/update-profile';
 import { getProfile } from '@/src/shared/api/get-profile';
+import { checkAuth } from '@/src/shared/utils/check-auth';
 
 export default function Home() {
   const [name, setName] = useState('');
@@ -23,6 +24,7 @@ export default function Home() {
   };
 
   useEffect(() => {
+    checkAuth();
     fetchProfile();
     setPassword(localStorage.getItem('password') ?? '');
   }, []);

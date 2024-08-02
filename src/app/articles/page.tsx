@@ -1,11 +1,16 @@
 'use client';
+import { useRef } from 'react';
+import generatePDF from 'react-to-pdf';
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useSearchParams } from 'next/navigation';
 import { getArticle } from '@/src/shared/api/get-article';
-import { useRouter } from 'next/navigation';
+
 import Footer from '@/src/widgets/footer';
 import { viewPost } from '@/src/shared/api/view-post';
+import OrangeButton from '@/src/shared/ui/orange-button';
+import { getProfile } from '@/src/shared/api/get-profile';
+import { PostType } from '@/src/app/new/page';
 
 const ArticlePage = () => {
   const params = useSearchParams();
@@ -47,13 +52,16 @@ const ArticlePage = () => {
   const fetchArticle = async () => {
     if (articleUrl) {
       const data = await getArticle(articleUrl);
-      const viewed = await viewPost(data);
-      console.log(viewed, 'AUE', data);
+      const user = await getProfile();
+      if (
+        !user.saved.find((item: PostType) => item.articleUrl == data.articleUrl)
+      ) {
+        const viewed = await viewPost(data);
+        console.log(viewed, 'AUE', data);
+      }
       setArticle(data);
     }
   };
-
-  const router = useRouter();
 
   useEffect(() => {
     fetchArticle();
@@ -63,6 +71,9 @@ const ArticlePage = () => {
     en: { left: 0, right: 'auto' },
     ru: { right: 0, left: 'auto' },
   };
+
+  const targetRef = useRef<HTMLDivElement>(null);
+  const [isExport, setIsExport] = useState(false);
 
   return (
     <div
@@ -77,47 +88,66 @@ const ArticlePage = () => {
             src={'/asset_bottom.png'}
             className={'absolute z-[-1] right-0 bottom-0'}
           />
-          <div className={'w-[90%] bg-white rounded-xl overflow-hidden pt-5'}>
+          <div
+            ref={targetRef}
+            id={'article'}
+            className={'w-[90%] bg-white rounded-xl overflow-hidden pt-5'}>
             <div className={'px-5'}>
-              <div
-                onClick={() => {
-                  router.back();
-                }}
-                className={'flex cursor-pointer items-center gap-0.5'}>
-                <img className={'w-1'} src={'/images/arrow_back.svg'} />
-                <p className={'text-[#099F96] text-sm'}>Назад</p>
-              </div>
+              {/*<div*/}
+              {/*  onClick={() => {*/}
+              {/*    router.back();*/}
+              {/*  }}*/}
+              {/*  className={'flex cursor-pointer items-center gap-0.5'}>*/}
+              {/*  <img className={'w-1'} src={'/images/arrow_back.svg'} />*/}
+              {/*  <p className={'text-[#099F96] text-sm'}>Назад</p>*/}
+              {/*</div>*/}
               <div className={'flex mt-3 justify-between items-center'}>
-                <img className={'w-[10rem]'} src={'/images/logo_black.png'} />
+                <img className={'w-[20rem]'} src={'/images/logo_black.png'} />
                 <div className={'flex items-center gap-2'}>
-                  <div
-                    onClick={() => {
-                      if (lang == 'ru') {
-                        setLang('en');
-                      } else {
-                        setLang('ru');
-                      }
-                    }}
-                    className={'flex items-center gap-1'}>
-                    <p className={'text-sm font-bold'}>EN</p>
+                  {!isExport && (
                     <div
-                      className={
-                        'flex relative cursor-pointer w-4 items-center'
-                      }>
+                      onClick={() => {
+                        if (lang == 'ru') {
+                          setLang('en');
+                        } else {
+                          setLang('ru');
+                        }
+                      }}
+                      className={'flex items-center gap-1'}>
+                      <p className={'text-sm font-bold'}>EN</p>
                       <div
                         className={
-                          'absolute bg-black z-0 w-full rounded-full h-1.4 bg-opacity-10'
-                        }></div>
-                      <motion.div
-                        variants={variants}
-                        animate={lang == 'en' ? 'en' : 'ru'}
-                        className={
-                          'bg-cOrange h-2 w-2 absolute rounded-full'
-                        }></motion.div>
+                          'flex relative cursor-pointer w-4 items-center'
+                        }>
+                        <div
+                          className={
+                            'absolute bg-black z-0 w-full rounded-full h-1.4 bg-opacity-10'
+                          }></div>
+                        <motion.div
+                          variants={variants}
+                          animate={lang == 'en' ? 'en' : 'ru'}
+                          className={
+                            'bg-cOrange h-2 w-2 absolute rounded-full'
+                          }></motion.div>
+                      </div>
+                      <p className={'text-sm font-bold'}>RU</p>
                     </div>
-                    <p className={'text-sm font-bold'}>RU</p>
-                  </div>
-                  {/*<OrangeButton className={'text-xs py-1 rounded-[0.5rem]'}>Саммари</OrangeButton>*/}
+                  )}
+                  {!isExport && (
+                    <OrangeButton
+                      onClick={async () => {
+                        setIsExport(true);
+                        setTimeout(async () => {
+                          await generatePDF(targetRef, {
+                            filename: `${lang == 'en' ? article?.title : article?.title_translation_human}.pdf`,
+                          });
+                          setIsExport(false);
+                        }, 2000);
+                      }}
+                      className={'text-xs py-1 rounded-[0.5rem]'}>
+                      Скачать PDF
+                    </OrangeButton>
+                  )}
                 </div>
               </div>
               <div
@@ -141,16 +171,22 @@ const ArticlePage = () => {
                   </a>
                 </p>
               </div>
-              <p className={'font-bold text-black text-md mt-4'}>
-                {lang == 'en' ? 'Summary:' : 'Саммари:'}
+              <p className={'font-bold text-[#172C31] text-md mt-4'}>
+                {lang == 'en' ? 'Summary:' : 'Краткое содержание:'}
               </p>
-              <p className={'text-justify whitespace-pre-wrap text-sm mt-1'}>
+              <p
+                className={
+                  'text-justify text-[#172C31] whitespace-pre-wrap text-sm mt-1'
+                }>
                 {article.summary_human}
               </p>
-              <p className={'font-bold text-black text-md mt-4'}>
-                {lang == 'en' ? 'Article text:' : 'Текст статьи:'}
+              <p className={'font-bold text-[#172C31] text-md mt-4'}>
+                {lang == 'en' ? 'Text:' : 'Текст:'}
               </p>
-              <p className={'text-justify whitespace-pre-wrap text-sm mt-1'}>
+              <p
+                className={
+                  'text-justify text-[#172C31] whitespace-pre-wrap text-sm mt-1'
+                }>
                 {lang == 'en' ? article.content : article.translation_human}
               </p>
             </div>

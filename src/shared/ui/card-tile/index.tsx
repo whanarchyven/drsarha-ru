@@ -40,7 +40,7 @@ const cvaAbout = cva(['text-sm underline cursor-pointer opacity-50'], {
   },
 });
 
-const cvaDescription = cva(['text-sm'], {
+const cvaDescription = cva(['text-sm whitespace-pre-wrap'], {
   variants: {
     type: {
       white: 'text-[#0E656F]',
@@ -71,10 +71,11 @@ const CardTile: FC<CardTileInterface> = ({
   align,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+
   return (
     <motion.div
       className="relative w-full h-[30rem]"
-      style={{ perspective: 1000 }}>
+      style={{ perspective: 1000, transformStyle: 'preserve-3d' }}>
       {type == 'dark' && <div className={cvaBackdropCard({ align })}></div>}
       <motion.div
         className={clsx('absolute backdrop-blur-2xl z-50 w-full h-full', {

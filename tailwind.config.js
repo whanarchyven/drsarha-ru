@@ -13,7 +13,7 @@ module.exports = {
     extend: {
       backgroundImage: {
         'custom-radial':
-          'radial-gradient(circle, #6CE2DB 0%, #006572 74%, #004959 100%)',
+          'radial-gradient(at 80% 40%, #6CE2DB 11%, #006572 74%, #004959 100%);',
       },
       fontFamily: {
         inter: ['Inter'],

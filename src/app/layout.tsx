@@ -83,7 +83,7 @@ export default function RootLayout({ children, ...rest }: RootLayoutProps) {
       </head>
       <body
         className={
-          'bg-custom-radial bg-cover bg-center bg-no-repeat  font-inter'
+          'bg-[url("/images/bg-gradient.svg")] bg-cover bg-center bg-no-repeat  font-inter'
         }>
         <ReduxProvider {...rest}>
           <div id="app">
