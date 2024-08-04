@@ -54,7 +54,7 @@ const ArticlePage = () => {
       const data = await getArticle(articleUrl);
       const user = await getProfile();
       if (
-        !user?.saved.find(
+        !user?.saved?.find(
           (item: PostType) => item.articleUrl == data.articleUrl
         )
       ) {
