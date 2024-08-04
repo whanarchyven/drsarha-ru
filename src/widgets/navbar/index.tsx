@@ -116,7 +116,7 @@ const Navbar: FC = () => {
                 className={cvaLinkLabel({
                   isActive: pathname.includes(item.link),
                 })}
-                href={isAuthorized ? `/${item.link}` : '/register'}>
+                href={isAuthorized ? `/${item.link}` : '/login'}>
                 {item.name}
               </Link>
             );
@@ -144,7 +144,7 @@ const Navbar: FC = () => {
               className={cvaLinkLabel({
                 isActive: pathname.includes(item.link),
               })}
-              href={isAuthorized ? `/${item.link}` : '/register'}>
+              href={isAuthorized ? `/${item.link}` : '/login'}>
               {item.name}
             </Link>
           ))}
