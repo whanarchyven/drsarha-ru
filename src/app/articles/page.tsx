@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import generatePDF from 'react-to-pdf';
 import React, { useEffect, useState } from 'react';
 
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { getArticle } from '@/src/shared/api/get-article';
 
 import Footer from '@/src/widgets/footer';
@@ -12,6 +12,7 @@ import OrangeButton from '@/src/shared/ui/orange-button';
 import { getProfile } from '@/src/shared/api/get-profile';
 import { PostType } from '@/src/app/new/page';
 import Markdown from 'react-markdown';
+import { useRouter } from 'next/navigation';
 
 const ArticlePage = () => {
   const params = useSearchParams();
