@@ -10,6 +10,7 @@ import DrugIcon from '@/public/images/landing/drug.svg';
 import { useMotionValue, useTransform, motion } from 'framer-motion';
 import CardTile from '@/src/shared/ui/card-tile';
 import { cva } from 'class-variance-authority';
+import Link from 'next/link';
 
 const FirstBlock = () => {
   const [mouseX, setMouseX] = useState(0);
@@ -86,7 +87,9 @@ const FirstBlock = () => {
             initial={{ y: '-20px', opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, ease: 'easeOut', delay: 0.6 }}>
-            <OrangeButton>Подписаться</OrangeButton>
+            <Link href={'#subscribe'}>
+              <OrangeButton>Подписаться</OrangeButton>
+            </Link>
           </motion.div>
         </motion.div>
         {/*<motion.img  className={' absolute -right-6.3 -bottom-[11.3rem] z-50'} src={'/images/landing/dots.svg'}/>*/}
@@ -173,9 +176,10 @@ const FirstBlock = () => {
                 Быть на передовой науки и медицины стало проще!
                 <br />
                 Подпишитесь на наш сервис и получайте последние новости и
-                открытия в мире дерматологии прямо на родном языке. Забудьте о
-                долгих поисках и устаревшей информации – теперь вы всегда будете
-                в курсе самых актуальных событий и трендов в вашей сфере.
+                открытия в мире дерматологии прямо сейчас на родном языке.
+                Забудьте о долгих поисках и устаревшей информации – теперь вы
+                всегда будете в курсе самых актуальных событий и трендов в вашей
+                сфере.
               </p>
             }
           />

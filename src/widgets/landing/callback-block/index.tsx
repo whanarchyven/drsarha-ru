@@ -1,37 +1,38 @@
 'use client';
 import React, { useState } from 'react';
 import OrangeButton from '@/src/shared/ui/orange-button';
-import { registerUser } from '@/src/shared/api/register';
-import { loginUser } from '@/src/shared/api/login';
 import Link from 'next/link';
+import axios from 'axios';
 
 const CallbackBlock = () => {
   const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-
-  const [alert, setAlert] = useState('');
 
   const handlleRegister = async () => {
-    if (confirmPassword == password) {
-      const data = await registerUser(email, phone, password);
-      console.log(data);
-      if (data.userId) {
-        const user = await loginUser(email, password);
-        if (user.token) {
-          localStorage.setItem('user', JSON.stringify(user.user));
-          localStorage.setItem('token', user.token);
-          localStorage.setItem('lastLogin', new Date().toISOString());
-          window.location.href = '/new';
-        }
-      }
-    } else {
-      setAlert('Пароли не совпадают');
-    }
+    // if (confirmPassword == password) {
+    //     // Define your credentials and parameters
+    //
+    //     // const data = await registerUser(email, phone, password);
+    //     // console.log(data);
+    //     // if (data.userId) {
+    //     //   const user = await loginUser(email, password);
+    //     //   if (user.token) {
+    //     //     localStorage.setItem('user', JSON.stringify(user.user));
+    //     //     localStorage.setItem('token', user.token);
+    //     //     localStorage.setItem('lastLogin', new Date().toISOString());
+    //     //     window.location.href = '/new';
+    //     //   }
+    //     // }
+    // } else {
+    //     setAlert('Пароли не совпадают');
+    // }
+    const { data } = await axios.post('/api/create-payment', {
+      email,
+    });
+    console.log(data);
+    window.location.href = data.confirmation.confirmation_url;
   };
   return (
-    <div className={'h-screen relative'}>
+    <div id={'subscribe'} className={'h-screen pt-10 relative'}>
       <div
         className={
           'w-full rounded-2xl backdrop-blur-2xl flex justify-between items-start callback-shadow pl-4 pt-4 bg-[#404040] bg-opacity-10'
@@ -41,6 +42,10 @@ const CallbackBlock = () => {
             Подпишитесь сегодня
             <br /> и будьте в курсе!
           </p>
+          <div className={'flex items-start flex-col gap-1'}>
+            <p className={'line-through text-cOrange'}>1699 ₽/ мес.</p>{' '}
+            <p className={'text-xl text-white font-bold'}>699 ₽/ в месяц</p>
+          </div>
           <div className={'flex flex-col mb-3 w-full gap-2'}>
             <input
               type={'email'}
@@ -53,48 +58,45 @@ const CallbackBlock = () => {
                 'outline-0 font-light placeholder:opacity-50 placeholder:text-white bg-transparent text-white border-opacity-50 border-[2px] border-white rounded-full text-base p-1'
               }
             />
-            <input
-              type={'tel'}
-              value={phone}
-              onChange={(event) => {
-                setPhone(event.target.value);
-              }}
-              placeholder={'Номер телефона'}
-              className={
-                'outline-0 font-light placeholder:opacity-50 placeholder:text-white bg-transparent text-white border-opacity-50 border-[2px] border-white rounded-full text-base p-1'
-              }
-            />
-            <input
-              type={'password'}
-              value={password}
-              onChange={(event) => {
-                setPassword(event.target.value);
-              }}
-              placeholder={'Пароль'}
-              className={
-                'outline-0 placeholder:opacity-50 placeholder:text-white bg-transparent text-white border-opacity-50 border-[2px] border-white rounded-full text-base p-1'
-              }
-            />
-            <input
-              type={'password'}
-              value={confirmPassword}
-              onChange={(event) => {
-                setConfirmPassword(event.target.value);
-              }}
-              placeholder={'Повторите пароль'}
-              className={
-                'outline-0 placeholder:opacity-50 placeholder:text-white bg-transparent text-white border-opacity-50 border-[2px] border-white rounded-full text-base p-1'
-              }
-            />
+            {/*<input*/}
+            {/*    type={'tel'}*/}
+            {/*    value={phone}*/}
+            {/*    onChange={(event) => {*/}
+            {/*        setPhone(event.target.value);*/}
+            {/*    }}*/}
+            {/*    placeholder={'Номер телефона'}*/}
+            {/*    className={*/}
+            {/*        'outline-0 font-light placeholder:opacity-50 placeholder:text-white bg-transparent text-white border-opacity-50 border-[2px] border-white rounded-full text-base p-1'*/}
+            {/*    }*/}
+            {/*/>*/}
+            {/*<input*/}
+            {/*    type={'password'}*/}
+            {/*    value={password}*/}
+            {/*    onChange={(event) => {*/}
+            {/*        setPassword(event.target.value);*/}
+            {/*    }}*/}
+            {/*    placeholder={'Пароль'}*/}
+            {/*    className={*/}
+            {/*        'outline-0 placeholder:opacity-50 placeholder:text-white bg-transparent text-white border-opacity-50 border-[2px] border-white rounded-full text-base p-1'*/}
+            {/*    }*/}
+            {/*/>*/}
+            {/*<input*/}
+            {/*    type={'password'}*/}
+            {/*    value={confirmPassword}*/}
+            {/*    onChange={(event) => {*/}
+            {/*        setConfirmPassword(event.target.value);*/}
+            {/*    }}*/}
+            {/*    placeholder={'Повторите пароль'}*/}
+            {/*    className={*/}
+            {/*        'outline-0 placeholder:opacity-50 placeholder:text-white bg-transparent text-white border-opacity-50 border-[2px] border-white rounded-full text-base p-1'*/}
+            {/*    }*/}
+            {/*/>*/}
             <p className={'text-white'}>
               Уже есть аккаунт?{' '}
               <Link href={'/login'} className={'underline  cursor-pointer'}>
                 Вход
               </Link>
             </p>
-            {alert.length > 0 ? (
-              <p className={'text-red-500'}>{alert}</p>
-            ) : null}
             <OrangeButton onClick={handlleRegister} className={'!w-1/2'}>
               Подписаться
             </OrangeButton>
