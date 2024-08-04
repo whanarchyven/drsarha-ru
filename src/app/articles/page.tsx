@@ -54,7 +54,9 @@ const ArticlePage = () => {
       const data = await getArticle(articleUrl);
       const user = await getProfile();
       if (
-        !user.saved.find((item: PostType) => item.articleUrl == data.articleUrl)
+        !user?.saved.find(
+          (item: PostType) => item.articleUrl == data.articleUrl
+        )
       ) {
         const viewed = await viewPost(data);
         console.log(viewed, 'AUE', data);
