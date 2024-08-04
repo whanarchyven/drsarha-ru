@@ -135,9 +135,9 @@ export default function RegisterPage(params: any) {
                   Попробуйте оплатить доступ ещё раз или связаться с
                   администратором
                 </p>
-                <OrangeButton className={'!w-1/2'}>
-                  <Link href={'/'}>На сайт</Link>
-                </OrangeButton>
+                <Link href={'/'}>
+                  <OrangeButton className={'!w-1/2'}>На сайт</OrangeButton>
+                </Link>
               </div>
             )}
             <div className={'relative h-[30rem]'}>

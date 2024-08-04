@@ -103,7 +103,7 @@ const Navbar: FC = () => {
           <BurgerIcon className={cvaBurgerIcon()} />
         </div>
         <div className={cvaLogo()}>
-          <Link href={isEnglish ? '/en/new' : '/'}>
+          <Link href={isAuthorized ? '/new' : '/'}>
             <img src={'/images/logo.png'} />
           </Link>
         </div>

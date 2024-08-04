@@ -8,7 +8,7 @@ import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import clsx from 'clsx';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const Features = () => {
   const sectionsRef = useRef<any>([]);
@@ -52,8 +52,6 @@ const Features = () => {
       });
     };
   }, []);
-
-  const router = useRouter();
 
   const getSlideId = (activeSection: any) => {
     switch (activeSection) {
@@ -107,12 +105,9 @@ const Features = () => {
                   whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, ease: 'easeOut', delay: 0.6 }}>
-                  <OrangeButton
-                    onClick={() => {
-                      router.push('/register');
-                    }}>
-                    Подписаться
-                  </OrangeButton>
+                  <Link href={'#subscribe'}>
+                    <OrangeButton>Подписаться</OrangeButton>
+                  </Link>
                 </motion.div>
               </motion.div>
               <motion.div
@@ -147,12 +142,9 @@ const Features = () => {
                   whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, ease: 'easeOut', delay: 0.6 }}>
-                  <OrangeButton
-                    onClick={() => {
-                      router.push('/register');
-                    }}>
-                    Подписаться
-                  </OrangeButton>
+                  <Link href={'#subscribe'}>
+                    <OrangeButton>Подписаться</OrangeButton>
+                  </Link>
                 </motion.div>
               </motion.div>
               <motion.div
@@ -187,12 +179,9 @@ const Features = () => {
                   whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, ease: 'easeOut', delay: 0.6 }}>
-                  <OrangeButton
-                    onClick={() => {
-                      router.push('/register');
-                    }}>
-                    Подписаться
-                  </OrangeButton>
+                  <Link href={'#subscribe'}>
+                    <OrangeButton>Подписаться</OrangeButton>
+                  </Link>
                 </motion.div>
               </motion.div>
             </div>

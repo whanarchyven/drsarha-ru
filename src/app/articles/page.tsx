@@ -2,8 +2,8 @@
 import { useRef } from 'react';
 import generatePDF from 'react-to-pdf';
 import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import { useSearchParams } from 'next/navigation';
+
+import { useRouter, useSearchParams } from 'next/navigation';
 import { getArticle } from '@/src/shared/api/get-article';
 
 import Footer from '@/src/widgets/footer';
@@ -11,13 +11,14 @@ import { viewPost } from '@/src/shared/api/view-post';
 import OrangeButton from '@/src/shared/ui/orange-button';
 import { getProfile } from '@/src/shared/api/get-profile';
 import { PostType } from '@/src/app/new/page';
+import Markdown from 'react-markdown';
 
 const ArticlePage = () => {
   const params = useSearchParams();
 
   const articleUrl = params.get('url');
 
-  const [lang, setLang] = useState('en');
+  const [lang] = useState('ru');
 
   const articleMock = {
     articleUrl:
@@ -53,8 +54,9 @@ const ArticlePage = () => {
     if (articleUrl) {
       const data = await getArticle(articleUrl);
       const user = await getProfile();
+      console.log(user);
       if (
-        !user?.saved?.find(
+        !user?.viewed?.find(
           (item: PostType) => item.articleUrl == data.articleUrl
         )
       ) {
@@ -69,13 +71,9 @@ const ArticlePage = () => {
     fetchArticle();
   }, []);
 
-  const variants = {
-    en: { left: 0, right: 'auto' },
-    ru: { right: 0, left: 'auto' },
-  };
-
   const targetRef = useRef<HTMLDivElement>(null);
   const [isExport, setIsExport] = useState(false);
+  const router = useRouter();
 
   return (
     <div
@@ -90,51 +88,50 @@ const ArticlePage = () => {
             src={'/asset_bottom.png'}
             className={'absolute z-[-1] right-0 bottom-0'}
           />
-          <div
-            ref={targetRef}
-            id={'article'}
-            className={'w-[90%] bg-white rounded-xl overflow-hidden pt-5'}>
-            <div className={'px-5'}>
-              {/*<div*/}
-              {/*  onClick={() => {*/}
-              {/*    router.back();*/}
-              {/*  }}*/}
-              {/*  className={'flex cursor-pointer items-center gap-0.5'}>*/}
-              {/*  <img className={'w-1'} src={'/images/arrow_back.svg'} />*/}
-              {/*  <p className={'text-[#099F96] text-sm'}>Назад</p>*/}
-              {/*</div>*/}
+          <div className={'w-[90%] bg-white rounded-xl overflow-hidden pt-5'}>
+            <div ref={targetRef} id={'article'} className={'px-10'}>
+              {!isExport && (
+                <div
+                  onClick={() => {
+                    router.back();
+                  }}
+                  className={'flex cursor-pointer items-center gap-0.5'}>
+                  <img className={'w-1'} src={'/images/arrow_back.svg'} />
+                  <p className={'text-[#099F96] text-sm'}>Назад</p>
+                </div>
+              )}
               <div className={'flex mt-3 justify-between items-center'}>
                 <img className={'w-[20rem]'} src={'/images/logo_black.png'} />
                 <div className={'flex items-center gap-2'}>
-                  {!isExport && (
-                    <div
-                      onClick={() => {
-                        if (lang == 'ru') {
-                          setLang('en');
-                        } else {
-                          setLang('ru');
-                        }
-                      }}
-                      className={'flex items-center gap-1'}>
-                      <p className={'text-sm font-bold'}>EN</p>
-                      <div
-                        className={
-                          'flex relative cursor-pointer w-4 items-center'
-                        }>
-                        <div
-                          className={
-                            'absolute bg-black z-0 w-full rounded-full h-1.4 bg-opacity-10'
-                          }></div>
-                        <motion.div
-                          variants={variants}
-                          animate={lang == 'en' ? 'en' : 'ru'}
-                          className={
-                            'bg-cOrange h-2 w-2 absolute rounded-full'
-                          }></motion.div>
-                      </div>
-                      <p className={'text-sm font-bold'}>RU</p>
-                    </div>
-                  )}
+                  {/*{!isExport && (*/}
+                  {/*  <div*/}
+                  {/*    onClick={() => {*/}
+                  {/*      if (lang == 'ru') {*/}
+                  {/*        setLang('en');*/}
+                  {/*      } else {*/}
+                  {/*        setLang('ru');*/}
+                  {/*      }*/}
+                  {/*    }}*/}
+                  {/*    className={'flex items-center gap-1'}>*/}
+                  {/*    <p className={'text-sm font-bold'}>EN</p>*/}
+                  {/*    <div*/}
+                  {/*      className={*/}
+                  {/*        'flex relative cursor-pointer w-4 items-center'*/}
+                  {/*      }>*/}
+                  {/*      <div*/}
+                  {/*        className={*/}
+                  {/*          'absolute bg-black z-0 w-full rounded-full h-1.4 bg-opacity-10'*/}
+                  {/*        }></div>*/}
+                  {/*      <motion.div*/}
+                  {/*        variants={variants}*/}
+                  {/*        animate={lang == 'en' ? 'en' : 'ru'}*/}
+                  {/*        className={*/}
+                  {/*          'bg-cOrange h-2 w-2 absolute rounded-full'*/}
+                  {/*        }></motion.div>*/}
+                  {/*    </div>*/}
+                  {/*    <p className={'text-sm font-bold'}>RU</p>*/}
+                  {/*  </div>*/}
+                  {/*)}*/}
                   {!isExport && (
                     <OrangeButton
                       onClick={async () => {
@@ -165,7 +162,7 @@ const ArticlePage = () => {
                     : article.title_translation_human}
                 </p>
                 <p className={'text-base'}>
-                  {lang == 'en' ? 'by ' : 'ист: '}{' '}
+                  {lang == 'en' ? 'by ' : 'источник:  '}{' '}
                   <a
                     className={'underline font-bold text-[#099F96]'}
                     href={article.mainUrl}>
@@ -176,20 +173,28 @@ const ArticlePage = () => {
               <p className={'font-bold text-[#172C31] text-md mt-4'}>
                 {lang == 'en' ? 'Summary:' : 'Краткое содержание:'}
               </p>
-              <p
+              <Markdown
                 className={
                   'text-justify text-[#172C31] whitespace-pre-wrap text-sm mt-1'
                 }>
                 {article.summary_human}
-              </p>
+              </Markdown>
               <p className={'font-bold text-[#172C31] text-md mt-4'}>
                 {lang == 'en' ? 'Text:' : 'Текст:'}
               </p>
-              <p
+              <Markdown
                 className={
                   'text-justify text-[#172C31] whitespace-pre-wrap text-sm mt-1'
                 }>
                 {lang == 'en' ? article.content : article.translation_human}
+              </Markdown>
+              <p
+                className={
+                  'text-justify text-cOrange font-bold italic whitespace-pre-wrap text-sm mt-3'
+                }>
+                Эта статья была создана с использованием нескольких инструментов
+                для редактирования, включая обработку текста с помощью ИИ. Перед
+                публикацией содержание было проверено специалистом.
               </p>
             </div>
             <div className={'mt-10'}>

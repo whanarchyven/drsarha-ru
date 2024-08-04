@@ -52,7 +52,9 @@ export default function LoginPage() {
             />
             <p className={'text-white'}>
               Ещё нет аккаунта?{' '}
-              <Link href={'/register'} className={'underline  cursor-pointer'}>
+              <Link
+                href={'/#subscribe'}
+                className={'underline  cursor-pointer'}>
                 Регистрация
               </Link>
             </p>

@@ -34,8 +34,8 @@ const MainBlock: FC<MainBlockInterface> = ({ locale }) => {
           </p>
         )}
         <p className={'md:text-md md:text-left text-center text-xs'}>
-          All the most relevant and up-to-date articles <br />
-          will now be available to you every day.
+          Все самые актуальные и свежие статьи
+          <br /> теперь будут доступны вам каждый день.
         </p>
       </div>
       <img

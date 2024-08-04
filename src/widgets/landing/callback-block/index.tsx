@@ -6,7 +6,7 @@ import axios from 'axios';
 
 const CallbackBlock = () => {
   const [email, setEmail] = useState('');
-
+  const [alert, setAlert] = useState('');
   const handlleRegister = async () => {
     // if (confirmPassword == password) {
     //     // Define your credentials and parameters
@@ -25,11 +25,15 @@ const CallbackBlock = () => {
     // } else {
     //     setAlert('Пароли не совпадают');
     // }
-    const { data } = await axios.post('/api/create-payment', {
-      email,
-    });
-    console.log(data);
-    window.location.href = data.confirmation.confirmation_url;
+    if (email) {
+      const { data } = await axios.post('/api/create-payment', {
+        email,
+      });
+      console.log(data);
+      window.location.href = data.confirmation.confirmation_url;
+    } else {
+      setAlert('Поле E-mail не может быть пустым');
+    }
   };
   return (
     <div id={'subscribe'} className={'h-screen pt-10 relative'}>
@@ -97,6 +101,9 @@ const CallbackBlock = () => {
                 Вход
               </Link>
             </p>
+            {alert.length > 0 ? (
+              <p className={'text-red-500'}>{alert}</p>
+            ) : null}
             <OrangeButton onClick={handlleRegister} className={'!w-1/2'}>
               Подписаться
             </OrangeButton>

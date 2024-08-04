@@ -74,7 +74,8 @@ const CardTile: FC<CardTileInterface> = ({
 
   return (
     <motion.div
-      className="relative w-full h-[30rem]"
+      onClick={() => setIsOpen(!isOpen)}
+      className="relative cursor-pointer w-full h-[30rem]"
       style={{ perspective: 1000 }}>
       {type == 'dark' && <div className={cvaBackdropCard({ align })}></div>}
       <motion.div
@@ -88,11 +89,7 @@ const CardTile: FC<CardTileInterface> = ({
             )}
             <div className="flex flex-col gap-3 h-full justify-between">
               <div className={cvaTitle({ type })}>{title}</div>
-              <p
-                onClick={() => setIsOpen(!isOpen)}
-                className={cvaAbout({ type })}>
-                Подробнее
-              </p>
+              <p className={cvaAbout({ type })}>Подробнее</p>
             </div>
             <div className="h-full flex justify-end">{icon}</div>
           </div>
@@ -105,9 +102,7 @@ const CardTile: FC<CardTileInterface> = ({
         <div className={cvaRoot({ type })}>
           <div className="h-[20rem]">
             <div className="flex flex-col gap-3">
-              <p
-                onClick={() => setIsOpen(!isOpen)}
-                className={clsx('cursor-pointer', cvaDescription({ type }))}>
+              <p className={clsx('cursor-pointer', cvaDescription({ type }))}>
                 ← Назад
               </p>
               <div className={cvaDescription({ type })}>{description}</div>

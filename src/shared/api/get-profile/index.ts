@@ -9,7 +9,7 @@ export const getProfile = async () => {
       },
     });
 
-    console.log(result.data);
+    console.log(result.data, 'PROFILE');
     return result.data;
   } catch (e: any) {
     console.log(e, 'ERR');
