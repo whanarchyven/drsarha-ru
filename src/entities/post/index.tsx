@@ -95,7 +95,6 @@ const Post: FC<postInterface> = ({
       <div className={'flex gap-3 items-center'}>
         <Link
           id={`post_read${id}`}
-          target={'_blank'}
           onClick={() => {
             viewFunc();
           }}
