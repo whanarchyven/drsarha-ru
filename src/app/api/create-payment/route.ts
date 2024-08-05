@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
 
   const paymentData = {
     amount: {
-      value: '1.00',
+      value: '699.00',
       currency: 'RUB',
     },
     capture: true,
