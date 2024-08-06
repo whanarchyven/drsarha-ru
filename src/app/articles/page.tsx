@@ -1,6 +1,6 @@
 'use client';
 import { useRef } from 'react';
-import generatePDF from 'react-to-pdf';
+import generatePDF, { Margin } from 'react-to-pdf';
 import React, { useEffect, useState } from 'react';
 
 import { useSearchParams } from 'next/navigation';
@@ -14,6 +14,31 @@ import { PostType } from '@/src/app/new/page';
 import Markdown from 'react-markdown';
 import { useRouter } from 'next/navigation';
 
+export interface ArticleInterface {
+  articleUrl: string;
+  content: string;
+  createdAt: string;
+  mainUrl: string;
+  publishedDate: string;
+  title: string;
+  updatedAt: string;
+  summary_ai: string;
+  summary_human: string;
+  translation_ai: string;
+  translation_human: string;
+  title_translation_ai: string;
+  title_translation_human: string;
+  source: string;
+  mutateFunc: () => any;
+  isPublished?: string;
+  category: string;
+  subcategory: string;
+  pdf_text?: string;
+  pdf_text_summary_human?: string;
+  pdf_text_translation_human?: string;
+  references?: string[];
+}
+
 const ArticlePage = () => {
   const params = useSearchParams();
 
@@ -21,35 +46,7 @@ const ArticlePage = () => {
 
   const [lang] = useState('ru');
 
-  const articleMock = {
-    articleUrl:
-      'https://practicaldermatology.com/news/spevigo-gets-expanded-indication-generalized-pustular-psoriasis-treatment-and-prevention/2467564/',
-    content:
-      "The European Medicines Agency’s Committee for Medicinal Products for Human Use (CHMP) has issued a positive opinion recommending the approval expanded indications for spesolimab (SPEVIGO®), according to a press release.\n\nA humanized selective IgG1 antibody targeting the interleukin-36 receptor (IL-36R), spesolimab is currently approved in 51 countries for the treatment of generalized pustular psoriasis (GPP) flares. The Committee's recommendation includes new approvals for preventing GPP flares in adults and adolescents aged 12 and older, as well as extending its approved use as a monotherapy for GPP flares in the same age group.\n\n“GPP presents a significant diagnostic challenge for healthcare professionals as it is a highly variable rare disease that is experienced differently by everyone who has it, and it has suffered from a historic lack of treatment options,” said Dr Peter van der Kerkhof, Professor and previous Chairman of the Department of Dermatology, Radboud University Nijmegen Medical Centre, Nijmegen, the Netherlands, in a news release from Boehringer Ingelheim. “Spesolimab’s recent approvals, combined with the CHMP recommendation provides us with the potential for continuous treatment, addressing a significant unmet need.”\n\nThe recommendation is based on the EFFISAYIL 2 clinical trial, the results of which showed a significant (84%) reduction in the risk of GPP flares over 48 weeks, with no flares observed after the fourth week of subcutaneous spesolimab administration in the high-dose group. The trial included 123 participants and found a similar incidence of adverse events in both the spesolimab and placebo groups.\n\n\"GPP goes way beyond the skin, it's a relentless and unpredictable disease that can impact every aspect of a person's life,” said Frida Dunger, Executive Director, IFPA (International Federation of Psoriasis Associations), in the press release. “I want a world where every person with GPP is diagnosed quickly and receives the treatment they need, and this is their right. There is much more to do, but I believe with all stakeholders working together we are headed in the right direction.”\n\n\n\nSource: Boehringer Ingelheim press release. July 29, 2024.",
-    createdAt: '2024-07-29T18:31:19.436000',
-    mainUrl: 'https://practicaldermatology.com/medical-news',
-    publishedDate: '2024-07-29T00:00:00',
-    title:
-      'Committee Recommends Expanded Indications for Spesolimab, Targeting Generalized Pustular Psoriasis',
-    updatedAt: '2024-07-31T14:24:08.430000',
-    summary_ai:
-      '- Европейское агентство по лекарственным средствам (EMA) рекомендовало расширение показаний для использования спецолимаба (SPEVIGO®), направленного на рецептор интерлейкина-36 (IL-36R).\n- Спецолимаб одобрен в 51 стране для лечения обострений генерализованного пустулезного псориаза (ГПП). Новые показания включают предотвращение обострений ГПП у взрослых и подростков (12+), а также использование в качестве монотерапии для обострений в той же возрастной группе.\n- Рекомендация основана на результатах клинического исследования EFFISAYIL 2, в котором показано значительное (84%) снижение риска обострений ГПП в течение 48 недель. После четвертой недели применения подкожного спецолимаба не наблюдалось обострений у участников высокой дозы.\n- Профессор Питер ван дер Керхоф отметил, что спецолимаб заполняет значительный пробел в лечении ГПП, который является редким и вариабельным заболеванием, с историческим дефицитом лечебных опций.\n- Клиницисты и представители пациентских организаций подчеркивают важность своевременной диагностики и лечения ГПП, который существенно влияет на качество жизни пациентов.',
-    title_translation_ai:
-      'Европейский агентство по лекарственным средствам расширяет показания для применения Спезолимаба в лечении и профилактике генерализованного пустулезного псориаза',
-    translation_ai:
-      'Комитет по лекарственным средствам для человека (CHMP) Европейского агентства по лекарственным средствам (EMA) выпустил положительное заключение, рекомендующее одобрение расширенных показаний для специлимаба (SPEVIGO®), согласно пресс-релизу.\n\nСпецилимаб, являющийся гуманизированным селективным антителом IgG1, направленным на рецептор интерлейкина-36 (IL-36R), в настоящее время одобрен в 51 стране для лечения вспышек генерализованного пустулезного псориаза (ГПП). Рекомендация Комитета включает новые одобрения для предотвращения вспышек ГПП у взрослых и подростков в возрасте от 12 лет и старше, а также расширение его применения как монотерапии для лечения вспышек ГПП в той же возрастной группе.\n\n«ГПП представляет значительную диагностическую проблему для медицинских профессионалов, так как это весьма вариабельное редкое заболевание, которое по-разному проявляется у каждого пациента и исторически испытывало недостаток в вариантах лечения», — сказал доктор Питер ван дер Керхоф, профессор и бывший председатель кафедры дерматологии, Медицинский центр Университета Радбоуд в Неймегене, Нидерланды, в пресс-релизе компании Boehringer Ingelheim. «Недавние одобрения специлимаба, в сочетании с рекомендацией CHMP, предоставляют нам потенциал для непрерывного лечения, что удовлетворяет значительную незакрытую потребность».\n\nРекомендация основывается на клиническом исследовании EFFISAYIL 2, результаты которого показали значительное (84%) снижение риска вспышек ГПП в течение 48 недель, без наблюдавшихся вспышек после четвертой недели подкожного введения специлимаба в группе с высокой дозировкой. В исследовании приняли участие 123 человека, и была выявлена схожая частота нежелательных явлений как в группе специлимаба, так и в группе плацебо.\n\n«ГПП выходит далеко за пределы кожи, это непреклонное и непредсказуемое заболевание, которое может затронуть все аспекты жизни человека», — сказала Фрида Дунгер, исполнительный директор Международной федерации ассоциаций псориаза (IFPA), в пресс-релизе. «Я хочу видеть мир, в котором каждый человек с ГПП будет быстро диагностирован и получит необходимое лечение, и это их право. Предстоит еще многое сделать, но я верю, что с сотрудничеством всех заинтересованных сторон мы движемся в правильном направлении».\n\nИсточник: пресс-релиз компании Boehringer Ingelheim. 29 июля 2024 года.',
-    summary_human:
-      '- Европейское агентство по лекарственным средствам (EMA) рекомендовало расширение показаний для использования спецолимаба (SPEVIGO®), направленного на рецептор интерлейкина-36 (IL-36R).\n- Спецолимаб одобрен в 51 стране для лечения обострений генерализованного пустулезного псориаза (ГПП). Новые показания включают предотвращение обострений ГПП у взрослых и подростков (12+), а также использование в качестве монотерапии для обострений в той же возрастной группе.\n- Рекомендация основана на результатах клинического исследования EFFISAYIL 2, в котором показано значительное (84%) снижение риска обострений ГПП в течение 48 недель. После четвертой недели применения подкожного спецолимаба не наблюдалось обострений у участников высокой дозы.\n- Профессор Питер ван дер Керхоф отметил, что спецолимаб заполняет значительный пробел в лечении ГПП, который является редким и вариабельным заболеванием, с историческим дефицитом лечебных опций.\n- Клиницисты и представители пациентских организаций подчеркивают важность своевременной диагностики и лечения ГПП, который существенно влияет на качество жизни пациентов.',
-    title_translation_human:
-      'Европейский агентство по лекарственным средствам расширяет показания для применения Спезолимаба в лечении и профилактике генерализованного пустулезного псориаза',
-    translation_human:
-      'Комитет по лекарственным средствам для человека (CHMP) Европейского агентства по лекарственным средствам (EMA) выпустил положительное заключение, рекомендующее одобрение расширенных показаний для специлимаба (SPEVIGO®), согласно пресс-релизу.\n\nСпецилимаб, являющийся гуманизированным селективным антителом IgG1, направленным на рецептор интерлейкина-36 (IL-36R), в настоящее время одобрен в 51 стране для лечения вспышек генерализованного пустулезного псориаза (ГПП). Рекомендация Комитета включает новые одобрения для предотвращения вспышек ГПП у взрослых и подростков в возрасте от 12 лет и старше, а также расширение его применения как монотерапии для лечения вспышек ГПП в той же возрастной группе.\n\n«ГПП представляет значительную диагностическую проблему для медицинских профессионалов, так как это весьма вариабельное редкое заболевание, которое по-разному проявляется у каждого пациента и исторически испытывало недостаток в вариантах лечения», — сказал доктор Питер ван дер Керхоф, профессор и бывший председатель кафедры дерматологии, Медицинский центр Университета Радбоуд в Неймегене, Нидерланды, в пресс-релизе компании Boehringer Ingelheim. «Недавние одобрения специлимаба, в сочетании с рекомендацией CHMP, предоставляют нам потенциал для непрерывного лечения, что удовлетворяет значительную незакрытую потребность».\n\nРекомендация основывается на клиническом исследовании EFFISAYIL 2, результаты которого показали значительное (84%) снижение риска вспышек ГПП в течение 48 недель, без наблюдавшихся вспышек после четвертой недели подкожного введения специлимаба в группе с высокой дозировкой. В исследовании приняли участие 123 человека, и была выявлена схожая частота нежелательных явлений как в группе специлимаба, так и в группе плацебо.\n\n«ГПП выходит далеко за пределы кожи, это непреклонное и непредсказуемое заболевание, которое может затронуть все аспекты жизни человека», — сказала Фрида Дунгер, исполнительный директор Международной федерации ассоциаций псориаза (IFPA), в пресс-релизе. «Я хочу видеть мир, в котором каждый человек с ГПП будет быстро диагностирован и получит необходимое лечение, и это их право. Предстоит еще многое сделать, но я верю, что с сотрудничеством всех заинтересованных сторон мы движемся в правильном направлении».\n\nИсточник: пресс-релиз компании Boehringer Ingelheim. 29 июля 2024 года.',
-    isPublished: false,
-    category: '',
-    source: 'practicaldermatology',
-  };
-
-  const [article, setArticle] = useState<typeof articleMock | null>(null);
+  const [article, setArticle] = useState<ArticleInterface | null>(null);
 
   const fetchArticle = async () => {
     if (articleUrl) {
@@ -140,6 +137,7 @@ const ArticlePage = () => {
                         setTimeout(async () => {
                           await generatePDF(targetRef, {
                             filename: `${lang == 'en' ? article?.title : article?.title_translation_human}.pdf`,
+                            page: { margin: Margin.MEDIUM },
                           });
                           setIsExport(false);
                         }, 2000);
@@ -189,6 +187,57 @@ const ArticlePage = () => {
                 }>
                 {lang == 'en' ? article.content : article.translation_human}
               </Markdown>
+              {article.pdf_text_translation_human && (
+                <>
+                  <p className={'font-bold text-[#172C31] text-md mt-4'}>
+                    Перевод прикреплённой PDF статьи
+                  </p>
+                  <Markdown
+                    className={
+                      'text-justify text-[#172C31] whitespace-pre-wrap text-sm mt-1'
+                    }>
+                    {article.pdf_text_translation_human}
+                  </Markdown>
+                </>
+              )}
+
+              {article.pdf_text_summary_human && (
+                <>
+                  <p className={'font-bold text-[#172C31] text-md mt-4'}>
+                    Краткое содержание прикреплённой PDF статьи
+                  </p>
+                  <Markdown
+                    className={
+                      'text-justify text-[#172C31] whitespace-pre-wrap text-sm mt-1'
+                    }>
+                    {article.pdf_text_summary_human}
+                  </Markdown>
+                </>
+              )}
+
+              {article.references && (
+                <>
+                  <p className={'font-bold text-[#172C31] text-md mt-4'}>
+                    Список литературы
+                  </p>
+                  {/*<Markdown className={*/}
+                  {/*  'text-justify text-[#172C31] whitespace-pre-wrap text-sm mt-1'*/}
+                  {/*}>*/}
+                  {/*</Markdown>*/}
+                  {article.references.map((ref, counter) => {
+                    return (
+                      <p
+                        className={
+                          'text-justify text-[#172C31] w-full text-sm mt-2'
+                        }
+                        key={counter}>
+                        {counter + 1}. {ref + ' \n'}
+                      </p>
+                    );
+                  })}
+                </>
+              )}
+
               <p
                 className={
                   'text-justify text-cOrange font-bold italic whitespace-pre-wrap text-sm mt-3'
