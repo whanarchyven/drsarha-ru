@@ -14,6 +14,8 @@ module.exports = {
       backgroundImage: {
         'custom-radial':
           'radial-gradient(at 80% 40%, #6CE2DB 11%, #006572 74%, #004959 100%);',
+        'plan-change-grad':
+          'radial-gradient(at 80% 10%, #6CE2DB 0%, #006572 74%, #004959 100%);',
       },
       fontFamily: {
         inter: ['Inter'],

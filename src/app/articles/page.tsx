@@ -1,6 +1,6 @@
 'use client';
 import { useRef } from 'react';
-import generatePDF, { Margin } from 'react-to-pdf';
+import generatePDF from 'react-to-pdf';
 import React, { useEffect, useState } from 'react';
 
 import { useSearchParams } from 'next/navigation';
@@ -86,166 +86,146 @@ const ArticlePage = () => {
             src={'/asset_bottom.png'}
             className={'absolute z-[-1] right-0 bottom-0'}
           />
-          <div className={'w-[90%] bg-white rounded-xl overflow-hidden pt-5'}>
-            <div ref={targetRef} id={'article'} className={'px-10'}>
-              {!isExport && (
+          <div className={'w-[90%] bg-white rounded-xl overflow-hidden'}>
+            <div ref={targetRef} id={'article'}>
+              {isExport && <img src={'/images/pdf_head.png'} />}
+              <div className={'px-10 mt-5'}>
+                {!isExport && (
+                  <div
+                    onClick={() => {
+                      router.back();
+                    }}
+                    className={'flex cursor-pointer items-center gap-0.5'}>
+                    <img className={'w-1'} src={'/images/arrow_back.svg'} />
+                    <p className={'text-[#099F96] text-sm'}>Назад</p>
+                  </div>
+                )}
+                {!isExport && (
+                  <div className={'flex mt-3 justify-between items-center'}>
+                    <img
+                      className={'w-[20rem]'}
+                      src={'/images/logo_black.png'}
+                    />
+                    <div className={'flex items-center gap-2'}>
+                      {!isExport && (
+                        <OrangeButton
+                          onClick={async () => {
+                            setIsExport(true);
+                            setTimeout(async () => {
+                              await generatePDF(targetRef, {
+                                filename: `${lang == 'en' ? article?.title : article?.title_translation_human}.pdf`,
+                                // page: { margin: Margin.MEDIUM },
+                              });
+                              setIsExport(false);
+                            }, 2000);
+                          }}
+                          className={'text-xs py-1 rounded-[0.5rem]'}>
+                          Скачать PDF
+                        </OrangeButton>
+                      )}
+                    </div>
+                  </div>
+                )}
                 <div
-                  onClick={() => {
-                    router.back();
-                  }}
-                  className={'flex cursor-pointer items-center gap-0.5'}>
-                  <img className={'w-1'} src={'/images/arrow_back.svg'} />
-                  <p className={'text-[#099F96] text-sm'}>Назад</p>
+                  className={
+                    'mt-5 flex flex-col gap-1 justify-center items-center'
+                  }>
+                  <p
+                    className={
+                      'font-extrabold text-[#172C31] text-center text-md'
+                    }>
+                    {lang == 'en'
+                      ? article.title
+                      : article.title_translation_human}
+                  </p>
+                  <p className={'text-base'}>
+                    {lang == 'en' ? 'by ' : 'источник:  '}{' '}
+                    <a
+                      className={'underline font-bold text-[#099F96]'}
+                      href={article.mainUrl}>
+                      {article.source}
+                    </a>
+                  </p>
                 </div>
-              )}
-              <div className={'flex mt-3 justify-between items-center'}>
-                <img className={'w-[20rem]'} src={'/images/logo_black.png'} />
-                <div className={'flex items-center gap-2'}>
-                  {/*{!isExport && (*/}
-                  {/*  <div*/}
-                  {/*    onClick={() => {*/}
-                  {/*      if (lang == 'ru') {*/}
-                  {/*        setLang('en');*/}
-                  {/*      } else {*/}
-                  {/*        setLang('ru');*/}
-                  {/*      }*/}
-                  {/*    }}*/}
-                  {/*    className={'flex items-center gap-1'}>*/}
-                  {/*    <p className={'text-sm font-bold'}>EN</p>*/}
-                  {/*    <div*/}
-                  {/*      className={*/}
-                  {/*        'flex relative cursor-pointer w-4 items-center'*/}
-                  {/*      }>*/}
-                  {/*      <div*/}
-                  {/*        className={*/}
-                  {/*          'absolute bg-black z-0 w-full rounded-full h-1.4 bg-opacity-10'*/}
-                  {/*        }></div>*/}
-                  {/*      <motion.div*/}
-                  {/*        variants={variants}*/}
-                  {/*        animate={lang == 'en' ? 'en' : 'ru'}*/}
-                  {/*        className={*/}
-                  {/*          'bg-cOrange h-2 w-2 absolute rounded-full'*/}
-                  {/*        }></motion.div>*/}
-                  {/*    </div>*/}
-                  {/*    <p className={'text-sm font-bold'}>RU</p>*/}
-                  {/*  </div>*/}
-                  {/*)}*/}
-                  {!isExport && (
-                    <OrangeButton
-                      onClick={async () => {
-                        setIsExport(true);
-                        setTimeout(async () => {
-                          await generatePDF(targetRef, {
-                            filename: `${lang == 'en' ? article?.title : article?.title_translation_human}.pdf`,
-                            page: { margin: Margin.MEDIUM },
-                          });
-                          setIsExport(false);
-                        }, 2000);
-                      }}
-                      className={'text-xs py-1 rounded-[0.5rem]'}>
-                      Скачать PDF
-                    </OrangeButton>
-                  )}
-                </div>
-              </div>
-              <div
-                className={
-                  'mt-5 flex flex-col gap-1 justify-center items-center'
-                }>
+                <p className={'font-bold text-[#172C31] text-md mt-4'}>
+                  {lang == 'en' ? 'Summary:' : 'Краткое содержание:'}
+                </p>
+                <Markdown
+                  className={
+                    'text-justify text-[#172C31] whitespace-pre-wrap text-sm mt-1'
+                  }>
+                  {article.summary_human}
+                </Markdown>
+                <p className={'font-bold text-[#172C31] text-md mt-4'}>
+                  {lang == 'en' ? 'Text:' : 'Текст:'}
+                </p>
+                <Markdown
+                  className={
+                    'text-justify text-[#172C31] whitespace-pre-wrap text-sm mt-1'
+                  }>
+                  {lang == 'en' ? article.content : article.translation_human}
+                </Markdown>
+                {article.pdf_text_translation_human && (
+                  <>
+                    <p className={'font-bold text-[#172C31] text-md mt-4'}>
+                      Перевод прикреплённой PDF статьи
+                    </p>
+                    <Markdown
+                      className={
+                        'text-justify text-[#172C31] whitespace-pre-wrap text-sm mt-1'
+                      }>
+                      {article.pdf_text_translation_human}
+                    </Markdown>
+                  </>
+                )}
+
+                {article.pdf_text_summary_human && (
+                  <>
+                    <p className={'font-bold text-[#172C31] text-md mt-4'}>
+                      Краткое содержание прикреплённой PDF статьи
+                    </p>
+                    <Markdown
+                      className={
+                        'text-justify text-[#172C31] whitespace-pre-wrap text-sm mt-1'
+                      }>
+                      {article.pdf_text_summary_human}
+                    </Markdown>
+                  </>
+                )}
+
+                {article.references && (
+                  <>
+                    <p className={'font-bold text-[#172C31] text-md mt-4'}>
+                      Список литературы
+                    </p>
+                    {/*<Markdown className={*/}
+                    {/*  'text-justify text-[#172C31] whitespace-pre-wrap text-sm mt-1'*/}
+                    {/*}>*/}
+                    {/*</Markdown>*/}
+                    {article.references.map((ref, counter) => {
+                      return (
+                        <p
+                          className={
+                            'text-justify text-[#172C31] w-full text-sm mt-2'
+                          }
+                          key={counter}>
+                          {counter + 1}. {ref + ' \n'}
+                        </p>
+                      );
+                    })}
+                  </>
+                )}
+
                 <p
                   className={
-                    'font-extrabold text-[#172C31] text-center text-md'
+                    'text-justify text-cOrange font-bold italic whitespace-pre-wrap text-sm mt-3'
                   }>
-                  {lang == 'en'
-                    ? article.title
-                    : article.title_translation_human}
-                </p>
-                <p className={'text-base'}>
-                  {lang == 'en' ? 'by ' : 'источник:  '}{' '}
-                  <a
-                    className={'underline font-bold text-[#099F96]'}
-                    href={article.mainUrl}>
-                    {article.source}
-                  </a>
+                  Эта статья была создана с использованием нескольких
+                  инструментов для редактирования, включая обработку текста с
+                  помощью ИИ. Перед публикацией содержание было проверено
+                  специалистом.
                 </p>
               </div>
-              <p className={'font-bold text-[#172C31] text-md mt-4'}>
-                {lang == 'en' ? 'Summary:' : 'Краткое содержание:'}
-              </p>
-              <Markdown
-                className={
-                  'text-justify text-[#172C31] whitespace-pre-wrap text-sm mt-1'
-                }>
-                {article.summary_human}
-              </Markdown>
-              <p className={'font-bold text-[#172C31] text-md mt-4'}>
-                {lang == 'en' ? 'Text:' : 'Текст:'}
-              </p>
-              <Markdown
-                className={
-                  'text-justify text-[#172C31] whitespace-pre-wrap text-sm mt-1'
-                }>
-                {lang == 'en' ? article.content : article.translation_human}
-              </Markdown>
-              {article.pdf_text_translation_human && (
-                <>
-                  <p className={'font-bold text-[#172C31] text-md mt-4'}>
-                    Перевод прикреплённой PDF статьи
-                  </p>
-                  <Markdown
-                    className={
-                      'text-justify text-[#172C31] whitespace-pre-wrap text-sm mt-1'
-                    }>
-                    {article.pdf_text_translation_human}
-                  </Markdown>
-                </>
-              )}
-
-              {article.pdf_text_summary_human && (
-                <>
-                  <p className={'font-bold text-[#172C31] text-md mt-4'}>
-                    Краткое содержание прикреплённой PDF статьи
-                  </p>
-                  <Markdown
-                    className={
-                      'text-justify text-[#172C31] whitespace-pre-wrap text-sm mt-1'
-                    }>
-                    {article.pdf_text_summary_human}
-                  </Markdown>
-                </>
-              )}
-
-              {article.references && (
-                <>
-                  <p className={'font-bold text-[#172C31] text-md mt-4'}>
-                    Список литературы
-                  </p>
-                  {/*<Markdown className={*/}
-                  {/*  'text-justify text-[#172C31] whitespace-pre-wrap text-sm mt-1'*/}
-                  {/*}>*/}
-                  {/*</Markdown>*/}
-                  {article.references.map((ref, counter) => {
-                    return (
-                      <p
-                        className={
-                          'text-justify text-[#172C31] w-full text-sm mt-2'
-                        }
-                        key={counter}>
-                        {counter + 1}. {ref + ' \n'}
-                      </p>
-                    );
-                  })}
-                </>
-              )}
-
-              <p
-                className={
-                  'text-justify text-cOrange font-bold italic whitespace-pre-wrap text-sm mt-3'
-                }>
-                Эта статья была создана с использованием нескольких инструментов
-                для редактирования, включая обработку текста с помощью ИИ. Перед
-                публикацией содержание было проверено специалистом.
-              </p>
             </div>
             <div className={'mt-10'}>
               <Footer />

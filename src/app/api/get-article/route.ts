@@ -8,6 +8,6 @@ export async function GET(request: NextRequest) {
   const result = await axios.get(
     `${process.env.ARTICLES_URL}/getArticle?url=${data}`
   );
-  console.log(result.data, `${process.env.BACKEND_URL}/getArticle/`);
+  // console.log(result.data, `${process.env.BACKEND_URL}/getArticle/`);
   return NextResponse.json(result.data);
 }

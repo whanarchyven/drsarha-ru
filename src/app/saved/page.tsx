@@ -10,10 +10,12 @@ export default function Home() {
   const [savedPosts, setSavedPosts] = useState<PostType[]>([]);
 
   const fetchSaved = async () => {
+    setIsLoading(true);
     const user = await getProfile();
     if (user.saved) {
       setSavedPosts(user.saved);
     }
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -26,6 +28,8 @@ export default function Home() {
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(0);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   return (
     <>
       <main>
@@ -37,6 +41,7 @@ export default function Home() {
         </div>
         <PostsBlock
           hideFilter
+          isLoading={isLoading}
           search={search}
           page={page}
           setPage={setPage}

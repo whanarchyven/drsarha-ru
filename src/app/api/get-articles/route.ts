@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
   );
   console.log(
     result.data,
-    `${process.env.ARTICLES_URL}/getPublishedArticles?category=${category}&subcategory=${subcategory}&search=${search}&limit=10&offset=${offset}`
+    `${process.env.ARTICLES_URL}/getPublishedArticles?category=${category}&subcategory=${subcategory}&search=${search}&limit=20&offset=${offset}`
   );
   return NextResponse.json(result.data);
 }

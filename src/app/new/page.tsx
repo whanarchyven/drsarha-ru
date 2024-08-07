@@ -40,6 +40,8 @@ export type PostType = (typeof postsMock)[0];
 export default function Home() {
   const [posts, setPosts] = useState<PostType[]>(postsMock);
 
+  const [total, setTotal] = useState(0);
+
   const fetchPosts = async (
     category: string,
     subcategory: string,
@@ -52,15 +54,19 @@ export default function Home() {
       search ?? '',
       page ?? 0
     );
-    setPosts(data);
+    setPosts(data.articles);
+    setTotal(data.total);
+    setIsLoading(false);
   };
 
   const [category, setCategory] = useState('news');
   const [subcategory, setSubCategory] = useState('');
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     checkAuth();
     fetchPosts(category, subcategory, search, page);
   }, [category, subcategory, search, page]);
@@ -183,6 +189,8 @@ export default function Home() {
         />
         <MainBlock />
         <PostsBlock
+          isLoading={isLoading}
+          total={total}
           search={search}
           page={page}
           setPage={setPage}

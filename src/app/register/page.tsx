@@ -16,9 +16,11 @@ export default function RegisterPage(params: any) {
 
   const [alert, setAlert] = useState('');
 
+  const [plan, setPlan] = useState<'year' | 'month' | null>(null);
+
   const handlleRegister = async () => {
-    if (confirmPassword == password) {
-      const data = await registerUser(email, phone, password);
+    if (confirmPassword == password && plan) {
+      const data = await registerUser(email, phone, password, plan);
       console.log(data);
       if (data.userId) {
         const user = await loginUser(email, password);
@@ -36,17 +38,29 @@ export default function RegisterPage(params: any) {
 
   const [isLoading, setIsLoading] = useState(true);
   const [isPaid, setIsPaid] = useState(false);
+  const [userAlreadyExists, setUserAlreadyExists] = useState(false);
 
   const fetchPaymentByEmail = async () => {
     const userEmail = params.searchParams.email;
     // console.log(params.searchParams.email)
     const { data } = await axios.get(`/api/get-payment?email=${userEmail}`);
+    if (data.message) {
+      setUserAlreadyExists(true);
+      setIsLoading(false);
+      return null;
+    }
     const paymentId = data?.payment?.id;
     const fetchPayment = await axios.get(
       `/api/check-payment?payment_id=${paymentId}`
     );
     const hasAccess = fetchPayment.data.paid;
     if (hasAccess) {
+      const { data } = await axios.post(
+        '/api/update-payment',
+        fetchPayment.data
+      );
+      console.log(data, 'AUE');
+      setPlan(data.payment.amount.value == '17880.00' ? 'year' : 'month');
       setIsLoading(false);
       setIsPaid(true);
     } else {
@@ -127,18 +141,34 @@ export default function RegisterPage(params: any) {
                 </OrangeButton>
               </div>
             ) : (
-              <div className={'flex flex-col -mt-10 w-1/2 gap-3'}>
-                <p className={'text-xl font-bold text-white'}>
-                  Видимо, оплата не прошла
-                </p>
-                <p className={'text-sm font-normal text-white'}>
-                  Попробуйте оплатить доступ ещё раз или связаться с
-                  администратором
-                </p>
-                <Link href={'/'}>
-                  <OrangeButton className={'!w-1/2'}>На сайт</OrangeButton>
-                </Link>
-              </div>
+              <>
+                {!userAlreadyExists ? (
+                  <div className={'flex flex-col -mt-10 w-1/2 gap-3'}>
+                    <p className={'text-xl font-bold text-white'}>
+                      Видимо, оплата не прошла
+                    </p>
+                    <p className={'text-sm font-normal text-white'}>
+                      Попробуйте оплатить доступ ещё раз или связаться с
+                      администратором
+                    </p>
+                    <Link href={'/'}>
+                      <OrangeButton className={'!w-1/2'}>На сайт</OrangeButton>
+                    </Link>
+                  </div>
+                ) : (
+                  <div className={'flex flex-col -mt-10 w-1/2 gap-3'}>
+                    <p className={'text-xl font-bold text-white'}>
+                      Ваш аккаунт уже зарегистрирован
+                    </p>
+                    <p className={'text-sm font-normal text-white'}>
+                      Вы можете войти на платформу
+                    </p>
+                    <Link href={'/login'}>
+                      <OrangeButton className={'!w-1/2'}>Вход</OrangeButton>
+                    </Link>
+                  </div>
+                )}
+              </>
             )}
             <div className={'relative h-[30rem]'}>
               <div

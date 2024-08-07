@@ -9,6 +9,8 @@ import { getProfile } from '@/src/shared/api/get-profile';
 import { savePost } from '@/src/shared/api/save-post';
 import SelectInput from '@/src/shared/ui/select-input';
 import SearchInput from '@/src/shared/ui/search-input';
+import ReactPaginate from 'react-paginate';
+import { ClipLoader } from 'react-spinners';
 
 interface postsBlockInterface {
   posts: PostType[];
@@ -24,6 +26,8 @@ interface postsBlockInterface {
   page: number;
   setPage: (page: number) => any;
   hideFilter?: boolean;
+  isLoading?: boolean;
+  total?: number;
 }
 
 const PostsBlock: FC<postsBlockInterface> = ({
@@ -38,6 +42,10 @@ const PostsBlock: FC<postsBlockInterface> = ({
   setSearch,
   subCategory,
   hideFilter,
+  page,
+  setPage,
+  isLoading,
+  total,
 }) => {
   const [gridDisplayMode, setGridDisplayMode] =
     useState<VariantProps<typeof cvaPostGrid>['mode']>('grid');
@@ -156,38 +164,64 @@ const PostsBlock: FC<postsBlockInterface> = ({
           </p>
         </div>
       )}
-      <div className={cvaPostGrid({ mode: gridDisplayMode })}>
-        {posts.map((post, counter) => (
-          <Post
-            id={String(counter)}
-            locale={locale}
-            key={String(counter)}
-            viewFunc={() => {
-              // viewPost(post);
-            }}
-            saveFunc={() => {
-              savePostCallback(post);
-            }}
-            deleteFunc={() => {
-              // deletePost(post);
-            }}
-            mode={gridDisplayMode}
-            displayView={'top'}
-            displaySaveBtn={!displaySaveBtn}
-            isViewed={
-              // Boolean(viewedPosts.find((item) => item.id == post.id)) ?? false
-              false
+      {!isLoading ? (
+        <div className={cvaPostGrid({ mode: gridDisplayMode })}>
+          {posts?.map((post, counter) => (
+            <Post
+              id={String(counter)}
+              locale={locale}
+              key={String(counter)}
+              viewFunc={() => {
+                // viewPost(post);
+              }}
+              saveFunc={() => {
+                savePostCallback(post);
+              }}
+              deleteFunc={() => {
+                // deletePost(post);
+              }}
+              mode={gridDisplayMode}
+              displayView={'top'}
+              displaySaveBtn={!displaySaveBtn}
+              isViewed={
+                // Boolean(viewedPosts.find((item) => item.id == post.id)) ?? false
+                false
+              }
+              isSaved={
+                Boolean(
+                  savedPosts.find((item) => item.articleUrl == post.articleUrl)
+                ) ?? false
+                // false
+              }
+              {...post}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className={'w-full flex justify-center'}>
+          <ClipLoader color={'white'} />
+        </div>
+      )}
+      {total && total != 0 && (
+        <div className={'flex items-center justify-center mt-4 gap-3'}>
+          <ReactPaginate
+            className={
+              'flex justify-center text-white font-light items-center gap-2'
             }
-            isSaved={
-              Boolean(
-                savedPosts.find((item) => item.articleUrl == post.articleUrl)
-              ) ?? false
-              // false
-            }
-            {...post}
+            breakLabel="..."
+            nextLabel="след. >"
+            onPageChange={(event) => {
+              setPage(event.selected);
+            }}
+            activeClassName={'font-bold underline'}
+            pageRangeDisplayed={3}
+            pageCount={Math.ceil(total / 10)}
+            initialPage={page}
+            previousLabel="< пред."
+            renderOnZeroPageCount={null}
           />
-        ))}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
