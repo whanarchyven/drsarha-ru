@@ -194,7 +194,10 @@ const Features = () => {
                 </motion.div>
               </motion.div>
             </div>
-
+            <div
+              className={
+                '!absolute z-50 md:hidden flex top-0 right-0 w-1/2 h-full '
+              }></div>
             <Swiper
               ref={swiperRef}
               className={

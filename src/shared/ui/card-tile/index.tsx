@@ -22,7 +22,7 @@ const cvaRoot = cva(['w-full p-2 md:p-4 h-full rounded-[2rem]'], {
 
 const cvaCard = cva(['w-full grid grid-cols-2 gap-3 items-start relative']);
 
-const cvaTitle = cva(['md:text-lg text-base'], {
+const cvaTitle = cva(['md:text-lg text-sm'], {
   variants: {
     type: {
       white: 'text-[#0E656F]',
@@ -87,7 +87,7 @@ const CardTile: FC<CardTileInterface> = ({
         <div className={cvaRoot({ type })}>
           <div className={cvaCard()}>
             {type === 'white' && (
-              <div className="rounded-full green-bounce-shadow w-3 absolute -right-2 -top-2 aspect-square bg-[#43ABAD]"></div>
+              <div className="rounded-full green-bounce-shadow w-2 md:w-3 absolute -right-1 -top-1 md:-right-2 md:-top-2 aspect-square bg-[#43ABAD]"></div>
             )}
             <div className="flex flex-col gap-3 md:h-full justify-between">
               <div className={cvaTitle({ type })}>{title}</div>

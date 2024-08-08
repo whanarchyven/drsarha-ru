@@ -70,7 +70,7 @@ const FirstBlock = () => {
             initial={{ x: '-200px', opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
-            className={'font-inter font-bold text-xl xl:text-[5rem]'}>
+            className={'font-inter font-bold text-lg xl:text-[5rem]'}>
             С нами вы всегда
             <br />
             на шаг впереди!
@@ -111,7 +111,7 @@ const FirstBlock = () => {
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.4, ease: 'easeOut', delay: 0.6 }}
             className={
-              'p-2 whitespace-nowrap flex justify-end md:w-[20rem] w-[11rem] md:text-base text-sm font-bold text-white green-shadow absolute md:-right-5 md:top-[14rem] right-5 z-20 top-[10rem] backdrop-blur-3xl bg-[#DDDDDD] bg-opacity-25 rounded-r-[2rem]'
+              'p-2 whitespace-nowrap hidden md:flex justify-end md:w-[20rem] w-[11rem] md:text-base text-sm font-bold text-white green-shadow absolute md:-right-5 md:top-[14rem] right-5 z-20 top-[10rem] backdrop-blur-3xl bg-[#DDDDDD] bg-opacity-25 rounded-r-[2rem]'
             }>
             Доктор <br /> Сара
           </motion.div>

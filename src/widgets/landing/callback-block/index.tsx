@@ -46,9 +46,12 @@ const CallbackBlock = () => {
     <div id={'subscribe'} className={'md:h-screen md:my-0 my-4 pt-10 relative'}>
       <div
         className={
-          'w-full rounded-2xl backdrop-blur-2xl flex justify-between items-end callback-shadow pl-2 md:pl-4 pt-2 md:pt-4 bg-[#404040] bg-opacity-10'
+          'w-full rounded-2xl backdrop-blur-2xl flex md:flex-row flex-col md:justify-between items-end callback-shadow px-2 md:pl-4 pt-2 md:pt-4 bg-[#404040] bg-opacity-10'
         }>
-        <div className={'flex w-1/2 flex-col self-start gap-0.6 md:gap-2'}>
+        <div
+          className={
+            'flex w-full md:w-1/2 flex-col self-start gap-0.6 md:gap-2'
+          }>
           <p className={'md:text-xl text-sm text-white font-bold'}>
             Подпишитесь сегодня
             <br /> и будьте в курсе!
@@ -200,7 +203,7 @@ const CallbackBlock = () => {
               }>
               <p className={'text-white font-bold'}>Выберите план</p>
             </div>
-            <div className={'w-full grid  md:grid-cols-2'}>
+            <div className={'w-full grid md:grid-cols-2'}>
               <div
                 className={
                   'flex flex-col border-r-2 border-white border-opacity-50 gap-1 p-2'
