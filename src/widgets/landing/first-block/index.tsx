@@ -63,19 +63,20 @@ const FirstBlock = () => {
     <>
       <div
         className={
-          'h-screen -mt-10 flex justify-between relative items-center'
+          'md:h-screen md:-mt-10 md:flex p-1 md:justify-between relative items-center'
         }>
-        <motion.div className={'w-1/2 text-white flex flex-col gap-3'}>
+        <motion.div className={'md:w-1/2 text-white flex flex-col gap-3'}>
           <motion.p
             initial={{ x: '-200px', opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
-            className={'font-inter font-bold text-[5rem]'}>
+            className={'font-inter font-bold text-xl xl:text-[5rem]'}>
             С нами вы всегда
             <br />
             на шаг впереди!
           </motion.p>
           <motion.p
+            className={'text-base xl:text-lg'}
             initial={{ y: '-20px', opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, ease: 'easeOut', delay: 0.3 }}>
@@ -93,21 +94,24 @@ const FirstBlock = () => {
           </motion.div>
         </motion.div>
         {/*<motion.img  className={' absolute -right-6.3 -bottom-[11.3rem] z-50'} src={'/images/landing/dots.svg'}/>*/}
-        <div className={'relative h-[50rem]'}>
+        <div
+          className={
+            'relative md:block md:w-1/2 flex justify-center h-[25rem] md:h-[50rem]'
+          }>
           <div
             className={
-              'w-[40rem] aspect-square green-shadow absolute right-0 z-10 bottom-0 backdrop-blur-3xl bg-black bg-opacity-25 rounded-[4rem]'
+              'md:w-[40rem] w-[20rem] aspect-square green-shadow absolute md:right-0 z-10 bottom-0 backdrop-blur-3xl bg-black bg-opacity-25 rounded-[4rem]'
             }></div>
           <div
             className={
-              'w-[32rem] aspect-square green-shadow opacity-30 -rotate-[7deg] absolute right-[20rem] bottom-1 bg-black bg-opacity-25 rounded-[4rem]'
+              'md:w-[32rem] w-[16rem] aspect-square green-shadow opacity-30 -rotate-[7deg] absolute md:right-[20rem] bottom-1 bg-black bg-opacity-25 rounded-[4rem]'
             }></div>
           <motion.div
             initial={{ x: '-100px', opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.4, ease: 'easeOut', delay: 0.6 }}
             className={
-              'p-2 whitespace-nowrap flex justify-end w-[20rem] font-bold text-white green-shadow absolute -right-3 z-20 top-[15rem] backdrop-blur-3xl bg-[#DDDDDD] bg-opacity-25 rounded-r-[2rem]'
+              'p-2 whitespace-nowrap flex justify-end md:w-[20rem] w-[11rem] md:text-base text-sm font-bold text-white green-shadow absolute md:-right-5 md:top-[14rem] right-5 z-20 top-[10rem] backdrop-blur-3xl bg-[#DDDDDD] bg-opacity-25 rounded-r-[2rem]'
             }>
             Доктор <br /> Сара
           </motion.div>
@@ -116,7 +120,7 @@ const FirstBlock = () => {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
             className={
-              'w-[40rem] aspect-square absolute right-0 z-30 bottom-0'
+              'md:w-[40rem] w-[20rem] aspect-square absolute md:right-0 z-30 bottom-0'
             }>
             <img className={'w-full'} src={'/images/sarah.gif'} />
           </motion.div>
@@ -126,9 +130,9 @@ const FirstBlock = () => {
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.6, ease: 'easeOut', delay: 0.8 }}
             className={
-              'p-2 flex justify-center items-center gap-2 font-bold text-white green-shadow absolute right-[27rem] z-30 bottom-[5rem] backdrop-blur-3xl bg-[#DDDDDD] bg-opacity-25 rounded-[2rem]'
+              'md:p-2 p-0.5 flex justify-center items-center gap-1 md:gap-2 font-bold text-white green-shadow md:w-auto w-[17rem] absolute md:right-[17rem]  md:text-md text-sm z-30 bottom-1 md:bottom-[5rem] backdrop-blur-3xl bg-[#DDDDDD] bg-opacity-25 rounded-[2rem]'
             }>
-            <AssistentIcon className={'w-6'} />
+            <AssistentIcon className={'md:w-6 w-3'} />
             <p>Персональный AI-помощник</p>
           </motion.div>
           <motion.div
@@ -136,32 +140,39 @@ const FirstBlock = () => {
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.6, ease: 'easeOut', delay: 1 }}
             style={{ x: xTransform, y: yTransform }}
-            className={'absolute -right-[3rem] z-50 bottom-[7rem]'}>
-            <CursorIcon />
+            className={
+              'absolute md:right-[3rem] hidden md:flex top-3 right-8 z-50 md:top-[25rem]'
+            }>
+            <CursorIcon className={'w-8 md:w-[11rem]'} />
           </motion.div>
           <motion.div
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             style={{ x: xTransform, y: yTransform }}
             transition={{ duration: 0.6, ease: 'easeOut', delay: 1 }}
-            className={'absolute right-[30rem] z-50 top-[15rem]'}>
-            <QuestionIcon />
+            className={
+              'absolute md:left-[14rem]  md:flex hidden bottom-0 left-0 z-50 md:top-[6rem]'
+            }>
+            <QuestionIcon className={'w-10 md:w-[14rem]'} />
           </motion.div>
         </div>
         {/*<img src={'/images/asset_lines.svg'} className={'absolute w-[10rem] -bottom-[14.2%] z-50 -right-[4.45%] '}/>*/}
       </div>
-      <div className={'h-screen flex relative justify-between items-center'}>
-        <div
-          className={
-            'w-[50rem] aspect-square bg-white absolute rounded-full z-0 blur-[12rem] -bottom-10'
-          }
-        />
-        <div
-          className={
-            'w-[50rem] aspect-square bg-white absolute rounded-full z-0 blur-[12rem] right-2 -top-10'
-          }
-        />
-        <div className={'w-full grid grid-cols-2 gap-3'}>
+      <div
+        className={
+          'md:h-screen mt-5 md:mt-0 flex relative justify-center md:justify-between items-center'
+        }>
+        {/*<div*/}
+        {/*  className={*/}
+        {/*    'w-[25rem] md:w-[50rem] aspect-square bg-white absolute rounded-full z-0 blur-[12rem] -bottom-10'*/}
+        {/*  }*/}
+        {/*/>*/}
+        {/*<div*/}
+        {/*  className={*/}
+        {/*    'w-[25rem] md:w-[50rem] aspect-square bg-white absolute rounded-full z-0 blur-[12rem] right-2 -top-10'*/}
+        {/*  }*/}
+        {/*/>*/}
+        <div className={'w-full grid grid-cols-1 md:grid-cols-2 gap-3'}>
           <CardTile
             type={'dark'}
             align={'left'}

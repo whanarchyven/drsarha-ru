@@ -133,7 +133,7 @@ const Navbar: FC = () => {
       {menuOpen && (
         <div
           className={
-            'fixed left-0 top-0 h-screen w-screen bg-[#246E63] z-[999999] flex flex-col p-3 gap-5'
+            'fixed left-0 top-0 h-screen w-screen bg-custom-radial z-[999999] flex flex-col p-3 gap-5'
           }>
           {links.map((item, counter) => (
             <Link

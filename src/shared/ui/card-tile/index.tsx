@@ -11,7 +11,7 @@ interface CardTileInterface
   description: ReactNode;
 }
 
-const cvaRoot = cva(['w-full p-4 h-full rounded-[2rem]'], {
+const cvaRoot = cva(['w-full p-2 md:p-4 h-full rounded-[2rem]'], {
   variants: {
     type: {
       white: 'bg-white',
@@ -22,7 +22,7 @@ const cvaRoot = cva(['w-full p-4 h-full rounded-[2rem]'], {
 
 const cvaCard = cva(['w-full grid grid-cols-2 gap-3 items-start relative']);
 
-const cvaTitle = cva(['text-lg'], {
+const cvaTitle = cva(['md:text-lg text-base'], {
   variants: {
     type: {
       white: 'text-[#0E656F]',
@@ -40,7 +40,7 @@ const cvaAbout = cva(['text-sm underline cursor-pointer opacity-50'], {
   },
 });
 
-const cvaDescription = cva(['text-sm whitespace-pre-wrap'], {
+const cvaDescription = cva(['text-[1.1rem] md:text-sm whitespace-pre-wrap'], {
   variants: {
     type: {
       white: 'text-[#0E656F]',
@@ -51,7 +51,7 @@ const cvaDescription = cva(['text-sm whitespace-pre-wrap'], {
 
 const cvaBackdropCard = cva(
   [
-    'w-full absolute h-full  bg-black rounded-[2rem] opacity-30 bg-opacity-25 z-[-1]',
+    'w-full absolute md:h-full md:flex hidden bg-black rounded-[2rem] opacity-30 bg-opacity-25 z-[-1]',
   ],
   {
     variants: {
@@ -75,11 +75,13 @@ const CardTile: FC<CardTileInterface> = ({
   return (
     <motion.div
       onClick={() => setIsOpen(!isOpen)}
-      className="relative cursor-pointer w-full h-[30rem]"
+      className="relative cursor-pointer w-full h-[20rem] md:h-[30rem]"
       style={{ perspective: 1000 }}>
       {type == 'dark' && <div className={cvaBackdropCard({ align })}></div>}
       <motion.div
-        className={clsx('absolute backdrop-blur-2xl z-50 w-full h-full')}
+        className={clsx(
+          'absolute backdrop-blur-2xl z-50 w-full h-full md:h-full'
+        )}
         animate={{ scaleY: isOpen ? 0 : 1 }}
         transition={{ duration: 0.6 }}>
         <div className={cvaRoot({ type })}>
@@ -87,11 +89,13 @@ const CardTile: FC<CardTileInterface> = ({
             {type === 'white' && (
               <div className="rounded-full green-bounce-shadow w-3 absolute -right-2 -top-2 aspect-square bg-[#43ABAD]"></div>
             )}
-            <div className="flex flex-col gap-3 h-full justify-between">
+            <div className="flex flex-col gap-3 md:h-full justify-between">
               <div className={cvaTitle({ type })}>{title}</div>
               <p className={cvaAbout({ type })}>Подробнее</p>
             </div>
-            <div className="h-full flex justify-end">{icon}</div>
+            <div className="md:h-full flex md:w-full w-10 justify-end">
+              {icon}
+            </div>
           </div>
         </div>
       </motion.div>

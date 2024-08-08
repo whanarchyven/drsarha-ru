@@ -43,21 +43,28 @@ const CallbackBlock = () => {
   const [openPlan, setOpenPlan] = useState(false);
 
   return (
-    <div id={'subscribe'} className={'h-screen pt-10 relative'}>
+    <div id={'subscribe'} className={'md:h-screen md:my-0 my-4 pt-10 relative'}>
       <div
         className={
-          'w-full rounded-2xl backdrop-blur-2xl flex justify-between items-end callback-shadow pl-4 pt-4 bg-[#404040] bg-opacity-10'
+          'w-full rounded-2xl backdrop-blur-2xl flex justify-between items-end callback-shadow pl-2 md:pl-4 pt-2 md:pt-4 bg-[#404040] bg-opacity-10'
         }>
-        <div className={'flex w-1/2 flex-col self-start gap-2'}>
-          <p className={'text-xl text-white font-bold'}>
+        <div className={'flex w-1/2 flex-col self-start gap-0.6 md:gap-2'}>
+          <p className={'md:text-xl text-sm text-white font-bold'}>
             Подпишитесь сегодня
             <br /> и будьте в курсе!
           </p>
-          <div className={'flex items-start flex-col gap-1'}>
-            <p className={'line-through text-cOrange'}>1699 ₽/ мес.</p>{' '}
-            <p className={'text-xl text-white font-bold'}>699 ₽/ в месяц</p>
+          <div className={'flex items-start flex-col gap-0.6 md:gap-1'}>
+            <p
+              className={
+                'line-through md:text-base text-[1.1rem] text-cOrange'
+              }>
+              1699 ₽/ мес.
+            </p>{' '}
+            <p className={'md:text-xl text-md text-white font-bold'}>
+              699 ₽/ в месяц
+            </p>
           </div>
-          <div className={'flex flex-col mb-3 w-full gap-2'}>
+          <div className={'flex flex-col mb-3 w-full gap-0.6 md:gap-2'}>
             <input
               type={'email'}
               value={email}
@@ -66,21 +73,23 @@ const CallbackBlock = () => {
               }}
               placeholder={'Email'}
               className={
-                'outline-0 font-light placeholder:opacity-50 placeholder:text-white bg-transparent text-white border-opacity-50 border-[2px] border-white rounded-full text-base p-1'
+                'outline-0 font-light placeholder:opacity-50 placeholder:text-white bg-transparent text-white border-opacity-50 border-[2px] border-white rounded-full text-[1rem] md:text-base md:px-1 p-1 md:p-1'
               }
             />
             <div
               onClick={() => {
                 setIsAgree(!isAgree);
               }}
-              className={'flex cursor-pointer items-center gap-1'}>
+              className={
+                'flex cursor-pointer items-start md:items-center gap-1'
+              }>
               <div
                 className={
-                  'w-1.5 aspect-square border-white border-2 rounded-md'
+                  'w-3 md:w-1.5 aspect-square border-white border-2 rounded-md'
                 }>
                 {isAgree && <img src={'/images/check.svg'} />}
               </div>
-              <p className={'text-white text-sm font-light'}>
+              <p className={'text-white text-[1rem] md:text-sm font-light'}>
                 Даю{' '}
                 <a
                   className={'underline'}
@@ -101,25 +110,27 @@ const CallbackBlock = () => {
               onClick={() => {
                 setSendNews(!sendNews);
               }}
-              className={'flex cursor-pointer items-center gap-1'}>
+              className={
+                'flex cursor-pointer items-start md:items-center gap-1'
+              }>
               <div
                 className={
-                  'w-1.5 aspect-square border-white border-2 rounded-md'
+                  'w-3 md:w-1.5 aspect-square border-white border-2 rounded-md'
                 }>
                 {sendNews && <img src={'/images/check.svg'} />}
               </div>
-              <p className={'text-white text-sm font-light'}>
+              <p className={'text-white text-[1rem] md:text-sm font-light'}>
                 Хочу получать новости и обновления drsarha.ru
               </p>
             </div>
-            <p className={'text-white'}>
+            <p className={'text-white md:text-base text-[1rem]'}>
               Уже есть аккаунт?{' '}
               <Link href={'/login'} className={'underline  cursor-pointer'}>
                 Вход
               </Link>
             </p>
             {alert.length > 0 ? (
-              <p className={'text-red-500'}>{alert}</p>
+              <p className={'text-red-500 md:text-base text-[1rem]'}>{alert}</p>
             ) : null}
             <OrangeButton onClick={openPop} className={'!w-1/2'}>
               Подписаться
@@ -174,12 +185,14 @@ const CallbackBlock = () => {
             onClick={() => {
               setOpenPlan(false);
             }}
-            className={'absolute right-2 top-2 w-4 cursor-pointer'}
+            className={
+              'absolute right-1 md:right-2 top-1 md:top-2 w-4 cursor-pointer'
+            }
             src={'/images/close.svg'}
           />
           <div
             className={
-              'w-2/3  bg-[#404040] bg-opacity-10 backdrop-blur-xl tile-shadow rounded-xl'
+              'w-4/5 md:w-2/3  bg-[#404040] bg-opacity-10 backdrop-blur-xl tile-shadow rounded-xl'
             }>
             <div
               className={
@@ -187,17 +200,18 @@ const CallbackBlock = () => {
               }>
               <p className={'text-white font-bold'}>Выберите план</p>
             </div>
-            <div className={'w-full grid grid-cols-2'}>
+            <div className={'w-full grid  md:grid-cols-2'}>
               <div
                 className={
                   'flex flex-col border-r-2 border-white border-opacity-50 gap-1 p-2'
                 }>
                 <p className={'text-white font-bold'}>Ежемесячно</p>
                 <div className={'flex items-start flex-col gap-1'}>
-                  <p className={'line-through text-lg text-cOrange'}>
+                  <p className={'line-through text-sm md:text-lg text-cOrange'}>
                     1990 ₽/ мес.*
                   </p>
-                  <p className={'text-xl text-white -mt-1 font-bold'}>
+                  <p
+                    className={'md:text-xl text-lg text-white -mt-1 font-bold'}>
                     699 ₽/ в месяц{' '}
                   </p>
                   <p className={'text-sm text-white'}>
@@ -206,26 +220,26 @@ const CallbackBlock = () => {
                   <div className={'flex flex-col mt-1 gap-0.4'}>
                     <div className={'flex items-center gap-1'}>
                       <img className={'w-3'} src={'/images/check.svg'} />
-                      <p className={'text-white text-sm'}>
+                      <p className={'text-white text-[1rem] md:text-sm'}>
                         доступ ко всем мировым статьям и научным публикациям
                       </p>
                     </div>
                     <div className={'flex items-center gap-1'}>
                       <img className={'w-3'} src={'/images/check.svg'} />
-                      <p className={'text-white text-sm'}>
+                      <p className={'text-white text-[1rem] md:text-sm'}>
                         доступ к персональному AI помощнику
                       </p>
                     </div>
                     <div className={'flex items-center gap-1'}>
                       <img className={'w-3'} src={'/images/check.svg'} />
-                      <p className={'text-white text-sm'}>
+                      <p className={'text-white text-[1rem] md:text-sm'}>
                         доступ к мировым новостям
                       </p>
                     </div>
                     <div className={'flex items-center gap-1'}>
                       <img className={'w-3'} src={'/images/check.svg'} />
-                      <p className={'text-white text-sm'}>
-                        доступ у открытому международному сообществу
+                      <p className={'text-white text-[1rem] md:text-sm'}>
+                        доступ к открытому международному сообществу
                       </p>
                     </div>
                   </div>
@@ -244,17 +258,22 @@ const CallbackBlock = () => {
                 }>
                 <p className={'text-white font-bold'}>Ежегодно</p>
                 <div className={'flex items-start flex-col gap-1'}>
-                  <p className={'text-md text-white'}>17 880 ₽/ год.</p>
-                  <p className={'text-xl -mt-1 text-white font-bold'}>
+                  <p className={'md:text-md text-sm text-white'}>
+                    17 880 ₽/ год.
+                  </p>
+                  <p
+                    className={
+                      'md:text-xl text-md md:-mt-1 text-white font-bold'
+                    }>
                     1 490 ₽/ в месяц{' '}
                   </p>
-                  <p className={'text-base font-bold text-white'}>
+                  <p className={'md:text-base text-sm font-bold text-white'}>
                     Все из Ежемесячного плана, а также:{' '}
                   </p>
                   <div className={'flex flex-col mt-1 gap-0.4'}>
                     <div className={'flex items-center gap-1'}>
                       <img className={'w-3'} src={'/images/check.svg'} />
-                      <p className={'text-white text-sm'}>
+                      <p className={'text-white text-[1rem] md:text-sm'}>
                         доступ к еженедельному дайджесту
                       </p>
                     </div>

@@ -16,7 +16,7 @@ const Chat = () => {
     return (
       <div className={'w-full flex items-center justify-end my-1'}>
         {message.role == 'ai' ? (
-          <div className={'w-full p-2 flex items-start gap-1'}>
+          <div className={'w-full p-1 md:p-2 flex items-start gap-1'}>
             <img
               src={'/images/doctor_sara_chat_avatar.png'}
               className={'w-3'}
@@ -28,7 +28,7 @@ const Chat = () => {
         ) : (
           <div
             className={
-              'w-3/4 p-2 flex justify-self-end rounded-xl bg-white bg-opacity-20 self-end items-start gap-1'
+              'w-3/4 p-1 md:p-2 flex justify-self-end rounded-xl bg-white bg-opacity-20 self-end items-start gap-1'
             }>
             <p className={'text-sm whitespace-pre-wrap text-white'}>
               {message.message}
@@ -61,7 +61,7 @@ const Chat = () => {
       { role: 'user', message: message },
     ]);
     const { data } = await axios.get(
-      `https://functions.yandexcloud.net/d4ejq3uthmcfado341qo?action=search&query=${message}&verbose_ru=true`
+      `https://functions.yandexcloud.net/d4ejq3uthmcfado341qo?action=search&query=${message}&verbose_ru=true&namespace=atopianews&index=atopianews&top_k=1`
     );
     setMessages((prevMessages) => [
       ...prevMessages,
@@ -100,12 +100,12 @@ const Chat = () => {
           />
           <div
             className={
-              'w-[90%] flex flex-col bg-black bg-opacity-15 backdrop-blur-xl p-3 rounded-2xl h-5/6'
+              'w-[90%] flex flex-col bg-black bg-opacity-15 backdrop-blur-xl p-2 md:p-3 rounded-2xl h-5/6'
             }>
             <p className={'font-bold flex-none text-white'}>
               Чат с ассистентом
             </p>
-            <div className={'overflow-y-scroll flex-1 p-2 '}>
+            <div className={'overflow-y-scroll flex-1 p-1 md:p-2 '}>
               {messages.map((msg, counter) => (
                 <Message key={counter} {...msg} />
               ))}

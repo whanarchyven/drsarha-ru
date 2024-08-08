@@ -32,7 +32,7 @@ const InputRow: FC<InputRowInterface> = ({
   return (
     <div
       className={
-        'w-full py-2 grid gap-3 grid-cols-7 border-b-2 border-white border-opacity-50'
+        'w-full py-2 grid gap-3 text-sm md:grid-cols-7 border-b-2 border-white border-opacity-50'
       }>
       <p className={'col-span-1 text-white text-base opacity-50'}>{name}:</p>
       {isEditing ? (

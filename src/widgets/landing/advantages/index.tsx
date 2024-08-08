@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 const Advantages = () => {
   return (
-    <div className="h-[150vh] flex justify-center items-center relative">
+    <div className="md:h-[150vh] h-[45rem] flex justify-center items-center relative">
       <motion.div
         initial={{ scale: 0.7, opacity: 0 }}
         whileInView={{ scale: 1, opacity: 1 }}

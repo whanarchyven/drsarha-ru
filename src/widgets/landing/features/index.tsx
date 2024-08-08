@@ -68,29 +68,30 @@ const Features = () => {
 
   return (
     <div id={'howtowork'} className={'relative'}>
-      <div className={'pl-32 pt-32'}>
+      <div className={'md:mt-0 mt-7'}>
         <div className={'border-cYellow pl-44 pt-80 relative '}>
           <div className="flex justify-between">
             {/* Левый блок с текстом */}
-            <div className="w-2/5">
+            <div className="w-1/2 mt:w-2/5">
               <motion.div
                 id={'screen1'}
                 ref={(el) => (sectionsRef.current[0] = el)}
                 data-section="screen1"
                 className={
-                  'w-full text-white h-screen flex flex-col justify-center gap-3'
+                  'w-full text-white md:h-screen flex flex-col justify-center gap-1 mt:gap-3'
                 }>
                 <motion.p
-                  initial={{ x: '-200px', opacity: 0 }}
-                  whileInView={{ x: 0, opacity: 1 }}
+                  initial={{ y: '-20px', opacity: 0 }}
+                  whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, ease: 'easeOut' }}
-                  className={'font-inter font-bold text-[5rem]'}>
+                  className={'font-inter font-bold text-base md:text-[5rem]'}>
                   Быстрый поиск
                   <br />
                   информации
                 </motion.p>
                 <motion.p
+                  className={'md:text-base text-[1.2rem]'}
                   initial={{ y: '-20px', opacity: 0 }}
                   whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: true }}
@@ -106,7 +107,9 @@ const Features = () => {
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, ease: 'easeOut', delay: 0.6 }}>
                   <Link href={'#subscribe'}>
-                    <OrangeButton>Подписаться</OrangeButton>
+                    <OrangeButton className={'mt:text-base  !mt:p-2'}>
+                      Подписаться
+                    </OrangeButton>
                   </Link>
                 </motion.div>
               </motion.div>
@@ -115,19 +118,20 @@ const Features = () => {
                 ref={(el) => (sectionsRef.current[1] = el)}
                 data-section="screen2"
                 className={
-                  'w-full text-white h-screen flex flex-col justify-center gap-3'
+                  'w-full text-white md:mt-0 mt-5 md:h-screen flex flex-col justify-center gap-1 mt:gap-3'
                 }>
                 <motion.p
-                  initial={{ x: '-200px', opacity: 0 }}
-                  whileInView={{ x: 0, opacity: 1 }}
+                  initial={{ y: '-20px', opacity: 0 }}
+                  whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, ease: 'easeOut' }}
-                  className={'font-inter font-bold text-[5rem]'}>
+                  className={'font-inter font-bold text-base md:text-[5rem]'}>
                   Помощь в
                   <br />
                   написании статей
                 </motion.p>
                 <motion.p
+                  className={'md:text-base text-[1.2rem]'}
                   initial={{ y: '-20px', opacity: 0 }}
                   whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: true }}
@@ -143,7 +147,9 @@ const Features = () => {
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, ease: 'easeOut', delay: 0.6 }}>
                   <Link href={'#subscribe'}>
-                    <OrangeButton>Подписаться</OrangeButton>
+                    <OrangeButton className={'mt:text-base  !mt:p-2'}>
+                      Подписаться
+                    </OrangeButton>
                   </Link>
                 </motion.div>
               </motion.div>
@@ -152,19 +158,20 @@ const Features = () => {
                 ref={(el) => (sectionsRef.current[2] = el)}
                 data-section="screen3"
                 className={
-                  'w-full text-white h-screen flex flex-col justify-center gap-3'
+                  'w-full text-white md:mt-0 mt-5 md:h-screen flex flex-col justify-center gap-1 mt:gap-3'
                 }>
                 <motion.p
-                  initial={{ x: '-200px', opacity: 0 }}
-                  whileInView={{ x: 0, opacity: 1 }}
+                  initial={{ y: '-20px', opacity: 0 }}
+                  whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, ease: 'easeOut' }}
-                  className={'font-inter font-bold text-[5rem]'}>
+                  className={'font-inter font-bold text-base md:text-[5rem]'}>
                   Удобная работа
                   <br />с текстами
                 </motion.p>
                 <motion.p
                   initial={{ y: '-20px', opacity: 0 }}
+                  className={'md:text-base text-[1.2rem]'}
                   whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, ease: 'easeOut', delay: 0.3 }}>
@@ -180,7 +187,9 @@ const Features = () => {
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, ease: 'easeOut', delay: 0.6 }}>
                   <Link href={'#subscribe'}>
-                    <OrangeButton>Подписаться</OrangeButton>
+                    <OrangeButton className={'mt:text-base  !mt:p-2'}>
+                      Подписаться
+                    </OrangeButton>
                   </Link>
                 </motion.div>
               </motion.div>
@@ -188,7 +197,9 @@ const Features = () => {
 
             <Swiper
               ref={swiperRef}
-              className={'w-[55rem] h-[60rem] !sticky top-9'}
+              className={
+                'md:w-[55rem] w-[20rem] h-[22rem] md:h-[60rem] !sticky top-9'
+              }
               spaceBetween={50}
               slidesPerView={1}
               direction={'vertical'}

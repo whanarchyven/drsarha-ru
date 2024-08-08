@@ -48,7 +48,7 @@ export default function Home() {
           mutateSubCategory={setSubCategory}
           category={category}
           mutateCategory={setCategory}
-          displaySaveBtn={true}
+          displaySaveBtn={false}
           posts={savedPosts}
         />
       </main>

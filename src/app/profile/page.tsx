@@ -102,7 +102,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className={'grid grid-cols-2 gap-3'}>
+        <div className={'grid md:grid-cols-2 gap-3'}>
           <div className={'bg-black mt-3 p-4 rounded-2xl bg-opacity-15'}>
             <p className={'text-md font-bold text-white'}>Безопасность</p>
             <div className={'flex flex-col gap-2'}>

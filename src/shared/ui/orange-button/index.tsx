@@ -20,7 +20,7 @@ const OrangeButton: FC<OrangeButtonInterface> = ({
         }
       }}
       className={clsx(
-        'p-2 text-base rounded-[2rem] cursor-pointer font-bold flex items-center w-fit justify-center bg-cOrange text-white',
+        'md:p-2 p-1 text-[0.9rem] md:text-base rounded-[2rem] cursor-pointer font-bold flex items-center w-fit justify-center bg-cOrange text-white',
         className
       )}>
       {children}

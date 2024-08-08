@@ -202,7 +202,7 @@ const PostsBlock: FC<postsBlockInterface> = ({
           <ClipLoader color={'white'} />
         </div>
       )}
-      {total && total != 0 && (
+      {total && total != 0 ? (
         <div className={'flex items-center justify-center mt-4 gap-3'}>
           <ReactPaginate
             className={
@@ -221,7 +221,7 @@ const PostsBlock: FC<postsBlockInterface> = ({
             renderOnZeroPageCount={null}
           />
         </div>
-      )}
+      ) : null}
     </div>
   );
 };

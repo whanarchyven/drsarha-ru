@@ -165,11 +165,11 @@ export default function Home() {
   };
 
   useEffect(() => {
-    if (!localStorage.getItem('education_passed')) {
+    if (!localStorage.getItem('education_passed') && posts.length > 1) {
       startTour();
       localStorage.setItem('education_passed', 'true');
     }
-  }, []);
+  }, [posts]);
 
   return (
     <>

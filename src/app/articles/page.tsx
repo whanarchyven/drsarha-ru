@@ -89,7 +89,7 @@ const ArticlePage = () => {
           <div className={'w-[90%] bg-white rounded-xl overflow-hidden'}>
             <div ref={targetRef} id={'article'}>
               {isExport && <img src={'/images/pdf_head.png'} />}
-              <div className={'px-10 mt-5'}>
+              <div className={'px-2 md:px-10 mt-5'}>
                 {!isExport && (
                   <div
                     onClick={() => {
