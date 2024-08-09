@@ -13,6 +13,7 @@ import { getProfile } from '@/src/shared/api/get-profile';
 import { PostType } from '@/src/app/new/page';
 import Markdown from 'react-markdown';
 import { useRouter } from 'next/navigation';
+import { ClipLoader } from 'react-spinners';
 
 export interface ArticleInterface {
   articleUrl: string;
@@ -232,7 +233,11 @@ const ArticlePage = () => {
             </div>
           </div>
         </>
-      ) : null}
+      ) : (
+        <div className={'w-full h-screen flex justify-center items-center'}>
+          <ClipLoader color={'#FFF'} />
+        </div>
+      )}
     </div>
   );
 };

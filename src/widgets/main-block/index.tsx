@@ -30,7 +30,7 @@ const MainBlock: FC<MainBlockInterface> = ({ locale }) => {
               'md:text-xl md:text-left text-sm text-center font-extrabold'
             }>
             Спасибо за ваш интерес
-            <br />к миру детской дерматологии!
+            <br />к миру дерматологии!
           </p>
         )}
         <p className={'md:text-md md:text-left text-center text-xs'}>

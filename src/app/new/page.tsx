@@ -74,7 +74,7 @@ export default function Home() {
   const [stepsEnabled, setStepsEnabled] = useState(false);
   const [initialStep] = useState(0);
 
-  const steps = [
+  const [steps, setSteps] = useState([
     {
       element: '#new',
       intro:
@@ -154,7 +154,7 @@ export default function Home() {
         '!bg-white !bg-opacity-10 !backdrop-blur-xl !text-white !text-sm',
       highlightClass: '!border-white',
     },
-  ];
+  ]);
 
   const startTour = () => {
     setStepsEnabled(true);
@@ -166,7 +166,75 @@ export default function Home() {
 
   useEffect(() => {
     if (!localStorage.getItem('education_passed') && posts.length > 1) {
-      startTour();
+      if (window.innerWidth < 640) {
+        setSteps([
+          {
+            element: '#burger',
+            intro:
+              'Нажимайте, чтобы перейти в разделы прочитанные и сохраненные статьи',
+            position: 'right',
+            tooltipClass:
+              '!bg-white !bg-opacity-10 !backdrop-blur-xl !text-white !text-sm',
+            highlightClass: '!border-white',
+          },
+          {
+            element: '#profile',
+            intro:
+              'Ваш личный кабинет, где вы можете обновить персональные данные, продлить подписки или проверить их актуальность',
+            position: 'left',
+            tooltipClass:
+              '!bg-white !bg-opacity-10 !backdrop-blur-xl !text-white !text-sm',
+            highlightClass: '!border-white',
+          },
+          {
+            element: '#type_articles',
+            intro:
+              'Нажимайте, чтобы изучить все международные статьи и публикации, использовать материалы для научных исследований и находить ссылки на первоисточники',
+            position: 'right',
+            tooltipClass:
+              '!bg-white !bg-opacity-10 !backdrop-blur-xl !text-white !text-sm',
+            highlightClass: '!border-white',
+          },
+          {
+            element: '#type_news',
+            intro:
+              'Нажимайте, чтобы быть в курсе всех актуальных мировых новостей ежедневно',
+            position: 'right',
+            tooltipClass:
+              '!bg-white !bg-opacity-10 !backdrop-blur-xl !text-white !text-sm',
+            highlightClass: '!border-white',
+          },
+          {
+            element: '#post_read0',
+            intro: 'Нажимайте, чтобы открыть полный текст научной статьи',
+            position: 'right',
+            tooltipClass:
+              '!bg-white !bg-opacity-10 !backdrop-blur-xl !text-white !text-sm',
+            highlightClass: '!border-white',
+          },
+          {
+            element: '#post_save0',
+            intro:
+              'Нажимайте, чтобы сохранить статью и легко вернуться к ней позже',
+            position: 'right',
+            tooltipClass:
+              '!bg-white !bg-opacity-10 !backdrop-blur-xl !text-white !text-sm',
+            highlightClass: '!border-white',
+          },
+          {
+            element: '#dr_sara',
+            intro:
+              'Нажимайте и задавайте вопросы – ваш персональный AI-помощник, навигатор по научным материалам, поможет быстро найти ответы и подготовить краткую аннотацию по вашему запросу',
+            position: 'left',
+            tooltipClass:
+              '!bg-white !bg-opacity-10 !backdrop-blur-xl !text-white !text-sm',
+            highlightClass: '!border-white',
+          },
+        ]);
+      }
+      setTimeout(() => {
+        startTour();
+      }, 1000);
       localStorage.setItem('education_passed', 'true');
     }
   }, [posts]);

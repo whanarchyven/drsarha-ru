@@ -16,7 +16,7 @@ const Chat = () => {
     return (
       <div className={'w-full flex items-center justify-end my-1'}>
         {message.role == 'ai' ? (
-          <div className={'w-full p-1 md:p-2 flex items-start gap-1'}>
+          <div className={'w-full flex items-start gap-1'}>
             <img
               src={'/images/doctor_sara_chat_avatar.png'}
               className={'w-3'}

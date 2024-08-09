@@ -72,7 +72,7 @@ const Features = () => {
         <div className={'border-cYellow pl-44 pt-80 relative '}>
           <div className="flex justify-between">
             {/* Левый блок с текстом */}
-            <div className="w-1/2 mt:w-2/5">
+            <div className="md:w-1/2 w-full mt:w-2/5">
               <motion.div
                 id={'screen1'}
                 ref={(el) => (sectionsRef.current[0] = el)}
@@ -85,13 +85,13 @@ const Features = () => {
                   whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, ease: 'easeOut' }}
-                  className={'font-inter font-bold text-base md:text-[5rem]'}>
+                  className={'font-inter font-bold text-lg md:text-[5rem]'}>
                   Быстрый поиск
                   <br />
                   информации
                 </motion.p>
                 <motion.p
-                  className={'md:text-base text-[1.2rem]'}
+                  className={'md:text-base text-[1.5rem]'}
                   initial={{ y: '-20px', opacity: 0 }}
                   whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: true }}
@@ -125,13 +125,13 @@ const Features = () => {
                   whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, ease: 'easeOut' }}
-                  className={'font-inter font-bold text-base md:text-[5rem]'}>
+                  className={'font-inter font-bold text-lg md:text-[5rem]'}>
                   Помощь в
                   <br />
                   написании статей
                 </motion.p>
                 <motion.p
-                  className={'md:text-base text-[1.2rem]'}
+                  className={'md:text-base text-[1.5rem]'}
                   initial={{ y: '-20px', opacity: 0 }}
                   whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: true }}
@@ -165,13 +165,13 @@ const Features = () => {
                   whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, ease: 'easeOut' }}
-                  className={'font-inter font-bold text-base md:text-[5rem]'}>
+                  className={'font-inter font-bold text-lg md:text-[5rem]'}>
                   Удобная работа
                   <br />с текстами
                 </motion.p>
                 <motion.p
                   initial={{ y: '-20px', opacity: 0 }}
-                  className={'md:text-base text-[1.2rem]'}
+                  className={'md:text-base text-[1.5rem]'}
                   whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, ease: 'easeOut', delay: 0.3 }}>
@@ -194,14 +194,14 @@ const Features = () => {
                 </motion.div>
               </motion.div>
             </div>
-            <div
-              className={
-                '!absolute z-50 md:hidden flex top-0 right-0 w-1/2 h-full '
-              }></div>
+            {/*<div*/}
+            {/*  className={*/}
+            {/*    '!absolute z-50 md:hidden flex top-0 right-0 w-1/2 h-full '*/}
+            {/*  }></div>*/}
             <Swiper
               ref={swiperRef}
               className={
-                'md:w-[55rem] w-[20rem] h-[22rem] md:h-[60rem] !sticky top-9'
+                'md:w-[55rem] w-[20rem] md:block !hidden h-[22rem] md:h-[60rem] !sticky top-9'
               }
               spaceBetween={50}
               slidesPerView={1}

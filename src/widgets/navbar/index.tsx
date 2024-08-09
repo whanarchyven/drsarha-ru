@@ -96,6 +96,7 @@ const Navbar: FC = () => {
     <div className={cvaRoot()}>
       <div className={cvaContainer()}>
         <div
+          id={'burger'}
           onClick={() => {
             setMenuOpen(true);
           }}
