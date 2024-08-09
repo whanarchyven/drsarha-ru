@@ -201,7 +201,7 @@ const Features = () => {
             <Swiper
               ref={swiperRef}
               className={
-                'md:w-[55rem] w-[20rem] md:block !hidden h-[22rem] md:h-[60rem] !sticky top-9'
+                'md:w-[55rem] w-[20rem] md:!block !hidden h-[22rem] md:h-[60rem] !sticky top-9'
               }
               spaceBetween={50}
               slidesPerView={1}
